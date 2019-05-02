@@ -2,13 +2,16 @@ local gravity = 700
 local player = {
   pos = {400, 100},
 
-  width = 100,
-  height = 100,
+  width = 60,
+  height = 60,
 
   s_vector = {0, 0},
   max_speed = {300, 700},
   move_force = 400, --horizontal speed
   stop_force = 500,
+  jump_force = 500,
+
+  jumping = false,
 }
 
 function player:draw()
@@ -46,6 +49,11 @@ function player:update(dt)
 end
 
 function player:keypressed(key)
+  screen_w, screen_h = love.graphics.getDimensions()
+  if key == 'space' and not self.jumping then
+    self.jumping = true
+    self.s_vector[2] = -self.jump_force
+  end
 end
 
 function player:stay_inside()
@@ -61,6 +69,8 @@ function player:stay_inside()
   end
   if self.pos[2] > screen_h - self.height then
     self.pos[2] = screen_h - self.height
+    self.s_vector[2] = 0
+    self.jumping = false
   end
 end
 return player
