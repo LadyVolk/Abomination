@@ -1,11 +1,14 @@
-local gravity = 200
+local gravity = 700
 local player = {
   pos = {400, 100},
-  h_speed = 200, --horizontal speed
-  v_speed = 200, --vertical speed
-  icon,
+
   width = 100,
   height = 100,
+
+  s_vector = {0, 0},
+  max_speed = {300, 700},
+  move_force = 400, --horizontal speed
+  stop_force = 500,
 }
 
 function player:draw()
@@ -16,13 +19,27 @@ end
 function player:update(dt)
 
   if love.keyboard.isDown('a') then
-    self.pos[1] = self.pos[1] - self.v_speed * dt
-  elseif love.keyboard.isDown('d') then
-    self.pos[1] = self.pos[1] + self.v_speed * dt
+    self.s_vector[1] = math.max(self.s_vector[1] - self.move_force * dt,
+                                -self.max_speed[1])
+  elseif self.s_vector[1] < 0 then
+     self.s_vector[1] = math.min(self.s_vector[1] + self.stop_force * dt, 0)
+  end
+
+  if love.keyboard.isDown('d') then
+    self.s_vector[1] = math.min(self.s_vector[1] + self.move_force * dt,
+                                self.max_speed[1])
+  elseif self.s_vector[1] > 0 then
+    self.s_vector[1] = math.max(self.s_vector[1] - self.stop_force * dt, 0)
   end
 
   --gravity
-  self.pos[2] = self.pos[2] + gravity * dt
+  self.s_vector[2] = math.min(self.s_vector[2] + gravity * dt,
+                              self.max_speed[2])
+
+  self.pos[1] = self.pos[1] + self.s_vector[1] * dt
+
+  self.pos[2] = self.pos[2] + self.s_vector[2] * dt
+
   --keep player inside
   player:stay_inside()
 
