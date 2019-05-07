@@ -38,6 +38,9 @@ function physics.collision(player, blocks)
 
 
       if math.abs(zy) < math.abs(zx) then
+        if player.s_vector[2] > 0 then
+          player.jumping = false
+        end
         player.s_vector[2] = 0
         player.pos[2] = player.pos[2] + zy
       else
