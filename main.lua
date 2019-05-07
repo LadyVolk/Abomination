@@ -23,3 +23,8 @@ end
 function love.keypressed(key)
   player:keypressed(key)
 end
+function love.mousepressed(x, y, button, isTouch)
+  if button == 1 then
+    table.insert(blocks, block_create({x, y}, 50, 50))
+  end
+end
