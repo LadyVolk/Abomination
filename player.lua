@@ -15,6 +15,7 @@ local player = {
 }
 
 function player:draw()
+  love.graphics.setColor(1, 0, 1, 1)
   love.graphics.rectangle("fill", self.pos[1], self.pos[2],
   self.width, self.height)
 end
