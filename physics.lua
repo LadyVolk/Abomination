@@ -25,9 +25,6 @@ function physics.collision(player, blocks)
       else
         zy = bloco.pos[2] -player.pos[2] -player.height
       end
-      if math.abs(zy) < 1 then
-        zy = 0
-      end
 
 
       local zx
@@ -37,9 +34,6 @@ function physics.collision(player, blocks)
       --player is left
       else
         zx = bloco.pos[1] -player.width -player.pos[1]
-      end
-      if math.abs(zx) < 1 then
-        zx = 0
       end
 
 
