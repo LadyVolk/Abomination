@@ -2,6 +2,7 @@ local player = require "player"
 local blocks
 local block_create = require "block"
 local fisica = require "physics"
+
 function love.load()
   blocks = {
     block_create({400, 400}, 50, 50)
@@ -10,6 +11,9 @@ end
 
 function love.update(dt)
   player:update(dt)
+  for _, bloco in ipairs(blocks) do
+    bloco:update(dt)
+  end
   fisica.collision(player, blocks)
 end
 
@@ -26,5 +30,7 @@ end
 function love.mousepressed(x, y, button, isTouch)
   if button == 1 then
     table.insert(blocks, block_create({x, y}, 50, 50))
+  elseif button == 2 then
+    table.insert(blocks, block_create({x, y}, 50, 50, "fall"))
   end
 end
