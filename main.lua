@@ -5,12 +5,10 @@ local fisica = require "physics"
 
 function love.load()
   blocks = {
-    block_create({400, 400}, 30, 30),
-    block_create({430, 400}, 30, 30),
-    block_create({460, 400}, 30, 30),
+    block_create({400, 400}, 90, 30),
     block_create({400, 430}, 30, 30, "fall"),
-    block_create({400, 460}, 30, 30),
-    block_create({400, 400}, 30, 30),
+    block_create({460, 430}, 60, 30),
+    block_create({400, 460}, 90, 30),
   }
 end
 

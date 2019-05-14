@@ -35,15 +35,20 @@ end
 
 function physics.stay_inside(object)
   screen_w, screen_h = love.graphics.getDimensions()
+    --when object gets to left of screen
   if object.pos[1] < 0 then
     object.pos[1] = 0
   end
+    --when object gets to right of screen
   if object.pos[1] > screen_w - object.width then
     object.pos[1] = screen_w - object.width
   end
+    --when objects gets to top of screen
   if object.pos[2] < 0 then
     object.pos[2] = 0
+    object.s_vector[2] = 0
   end
+    --when player gets below of screen
   if object.pos[2] > screen_h - object.height then
     object.pos[2] = screen_h - object.height
     object.s_vector[2] = 0
