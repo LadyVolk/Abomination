@@ -2,11 +2,11 @@ local physics = {}
 physics.gravity = 700
 
 --collision between two rectangles
-function physics.rect_with_rect(rect1, rect2)
-  if rect1.pos[2] + rect1.height <= rect2.pos[2] or
-     rect1.pos[2] >= rect2.pos[2] + rect2.height or
-     rect1.pos[1] + rect1.width <= rect2.pos[1] or
-     rect1.pos[1] >= rect2.pos[1] + rect2.width then
+function physics.newrect_with_oldrect(rect1, rect2)
+  if rect1.new_pos[2] + rect1.height <= rect2.pos[2] or
+     rect1.new_pos[2] >= rect2.pos[2] + rect2.height or
+     rect1.new_pos[1] + rect1.width <= rect2.pos[1] or
+     rect1.new_pos[1] >= rect2.pos[1] + rect2.width then
     return false
   else
     return true
@@ -15,7 +15,7 @@ end
 
 
 function physics.collision(player, blocks)
-  --block with blocks
+  --block with blocks and players
   for _, bloco in ipairs (blocks) do
     if bloco.type == "fall" then
       for _, bloco2 in ipairs (blocks) do
@@ -53,35 +53,35 @@ function physics.stay_inside(object)
   end
 end
 
-function physics.check_collision(object, block)
-  if physics.rect_with_rect(object, block) then
+function physics.check_collision(object1, object2)
+  if physics.newrect_with_oldrect(object1, object2) then
     local zy
     --object below
-    if object.s_vector[2] < 0 then
-      zy = block.pos[2] + block.height -object.pos[2]
-    --object above
+    if object1.s_vector[2] < 0 then
+      zy = object2.pos[2] + object2.height -object1.new_pos[2]
+    --object1 above
     else
-      zy = block.pos[2] -object.pos[2] -object.height
+      zy = object2.pos[2] -object1.new_pos[2] -object1.height
     end
 
     local zx
     --object is right
-    if object.s_vector[1] < 0 then
-      zx = block.pos[1] + block.width - object.pos[1]
+    if object1.s_vector[1] < 0 then
+      zx = object2.pos[1] + object2.width - object1.new_pos[1]
     --object is left
     else
-      zx = block.pos[1] -object.width -object.pos[1]
+      zx = object2.pos[1] -object1.width -object1.new_pos[1]
     end
 
     if math.abs(zy) < math.abs(zx) then
-      if object.s_vector[2] > 0 and object.type == "player" then
-        object.jumping = false
+      if object1.s_vector[2] > 0 and object1.type == "player" then
+        object1.jumping = false
       end
-      object.s_vector[2] = 0
-      object.pos[2] = object.pos[2] + zy
+      object1.s_vector[2] = 0
+      object1.new_pos[2] = object1.new_pos[2] + zy
     else
-      object.s_vector[1] = 0
-      object.pos[1] = object.pos[1] + zx
+      object1.s_vector[1] = 0
+      object1.new_pos[1] = object1.new_pos[1] + zx
     end
   end
 end

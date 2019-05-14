@@ -1,9 +1,10 @@
 local physics = require "physics"
 local player = {
   pos = {400, 100},
+  new_pos =  {},
 
-  width = 60,
-  height = 60,
+  width = 30,
+  height = 30,
 
   s_vector = {0, 0},
   max_speed = {300, 700},
@@ -22,7 +23,12 @@ function player:draw()
   self.width, self.height)
 end
 
-function player:update(dt)
+function player:update_pos()
+  self.pos[1] = self.new_pos[1]
+  self.pos[2] = self.new_pos[2]
+end
+
+function player:update_new_pos(dt)
 
   if love.keyboard.isDown('a') then
     self.s_vector[1] = math.max(self.s_vector[1] - self.move_force * dt,
@@ -42,12 +48,8 @@ function player:update(dt)
   self.s_vector[2] = math.min(self.s_vector[2] + physics.gravity * dt,
                               self.max_speed[2])
   --change position
-  self.pos[1] = self.pos[1] + self.s_vector[1] * dt
-  self.pos[2] = self.pos[2] + self.s_vector[2] * dt
-
-  --keep player inside
-  physics.stay_inside(self)
-
+  self.new_pos[1] = self.pos[1] + self.s_vector[1] * dt
+  self.new_pos[2] = self.pos[2] + self.s_vector[2] * dt
 end
 
 function player:keypressed(key)
