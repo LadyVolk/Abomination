@@ -1,34 +1,45 @@
 local physics = require "physics"
-local player = {
-  pos = {400, 100},
-  new_pos =  {},
+local function create_player(pos)
+  local player = {
+    pos = pos,
+    new_pos =  {},
 
-  width = 30,
-  height = 30,
+    width = 30,
+    height = 30,
 
-  s_vector = {0, 0},
-  max_speed = {300, 700},
-  move_force = 400, --horizontal speed
-  stop_force = 500,
-  jump_force = 500,
+    s_vector = {0, 0},
+    max_speed = {300, 700},
+    move_force = 400, --horizontal speed
+    stop_force = 500,
+    jump_force = 500,
 
-  type = "player",
+    type = "player",
 
-  jumping = false,
-}
+    jumping = false,
 
-function player:draw()
+    kinetic = true,
+
+    --functions
+    draw = draw,
+    update_pos = update_pos,
+    update_new_pos = update_new_pos,
+    keypressed = keypressed,
+  }
+  return player
+end
+
+local function draw(self)
   love.graphics.setColor(1, 0, 1, 1)
   love.graphics.rectangle("fill", self.pos[1], self.pos[2],
   self.width, self.height)
 end
 
-function player:update_pos()
+local function update_pos(self)
   self.pos[1] = self.new_pos[1]
   self.pos[2] = self.new_pos[2]
 end
 
-function player:update_new_pos(dt)
+local function update_new_pos(self, dt)
 
   if love.keyboard.isDown('a') then
     self.s_vector[1] = math.max(self.s_vector[1] - self.move_force * dt,
@@ -52,7 +63,7 @@ function player:update_new_pos(dt)
   self.new_pos[2] = self.pos[2] + self.s_vector[2] * dt
 end
 
-function player:keypressed(key)
+local function keypressed(self, key)
   screen_w, screen_h = love.graphics.getDimensions()
   if key == 'space' and not self.jumping then
     self.jumping = true
@@ -60,4 +71,4 @@ function player:keypressed(key)
   end
 end
 
-return player
+return create_player

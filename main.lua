@@ -1,16 +1,8 @@
-local player = require "player"
-local blocks
-local block_create = require "block"
-local physics = require "physics"
 local FPS = 60
+local level
 
 function love.load()
-  blocks = {
-    block_create({400, 400}, 90, 30),
-    block_create({400, 430}, 30, 30, "fall"),
-    block_create({460, 430}, 60, 30),
-    block_create({400, 460}, 90, 30),
-  }
+  level = require "level" (1)
 end
 
 local time = 0
@@ -19,24 +11,23 @@ function love.update(dt)
   time = time + dt
   while time >= 1/FPS do
     time = time - 1/FPS
-    physics.run_physics(player, blocks, 1/FPS)
+    level:update(dt)
   end
 end
 
 function love.draw()
-  player:draw()
-  for _, bloco in ipairs(blocks) do
-    bloco:draw()
-  end
+  level:draw()
 end
 
 function love.keypressed(key)
-  player:keypressed(key)
+  level:keypressed(key)
 end
 function love.mousepressed(x, y, button, isTouch)
   if button == 1 then
-    table.insert(blocks, block_create({x, y}, 30, 30))
+    table.insert(level.elements,
+                 require "block" ({x, y}, 30, 30, false))
   elseif button == 2 then
-    table.insert(blocks, block_create({x, y}, 30, 30, "fall"))
+    table.insert(level.elements,
+                 require "block" ({x, y}, 30, 30, true))
   end
 end

@@ -29,10 +29,12 @@ local function update_new_pos(block, dt)
   end
 end
 
-local function create_block(pos, width, height, type)
-  type = type or "static"
+local function create_block(pos, width, height, kinetic)
   local block = {
-    type = type,
+
+    type = "block",
+
+    kinetic = kinetic,
 
     width = width,
     height = height,

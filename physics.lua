@@ -14,22 +14,16 @@ function physics.newrect_with_oldrect(rect1, rect2)
 end
 
 
-function physics.collision(player, blocks)
-  --block with blocks and players
-  for _, bloco in ipairs (blocks) do
-    if bloco.type == "fall" then
-      for _, bloco2 in ipairs (blocks) do
-        if bloco ~= bloco2 then
-          physics.check_collision(bloco, bloco2)
+function physics.collision(elements)
+  
+  for _, element in ipairs (elements) do
+    if element.kinetic then
+      for _, element2 in ipairs (elements) do
+        if element ~= element2 then
+          physics.check_collision(element, element2)
         end
       end
-      physics.check_collision(bloco, player)
     end
-  end
-
-  --player with blocks
-  for _, bloco in ipairs (blocks) do
-    physics.check_collision(player, bloco)
   end
 end
 
@@ -91,18 +85,17 @@ function physics.check_collision(object1, object2)
   end
 end
 
-function physics.run_physics(player, blocks, dt)
-  player:update_new_pos(dt)
-  for _, bloco in ipairs(blocks) do
-    bloco:update_new_pos(dt)
+function physics.run_physics(elements, dt)
+
+  for _, element in ipairs(elements) do
+    element:update_new_pos(dt)
   end
-  physics.collision(player, blocks)
-  --actually change pos after checking for overlapping
-  player:update_pos()
-  physics.stay_inside(player)
-  for _, bloco in ipairs(blocks) do
-    bloco:update_pos()
-    physics.stay_inside(bloco)
+
+  physics.collision(elements)
+
+  for _, element in ipairs(elements) do
+    element:update_pos()
+    physics.stay_inside(element)
   end
 end
 
