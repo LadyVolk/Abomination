@@ -1,7 +1,8 @@
 local player = require "player"
 local blocks
 local block_create = require "block"
-local fisica = require "physics"
+local physics = require "physics"
+local FPS = 60
 
 function love.load()
   blocks = {
@@ -12,18 +13,13 @@ function love.load()
   }
 end
 
+local time = 0
+
 function love.update(dt)
-  player:update_new_pos(dt)
-  for _, bloco in ipairs(blocks) do
-    bloco:update_new_pos(dt)
-  end
-  fisica.collision(player, blocks)
-  --actually change pos after checking for overlapping
-  player:update_pos()
-  fisica.stay_inside(player)
-  for _, bloco in ipairs(blocks) do
-    bloco:update_pos()
-    fisica.stay_inside(bloco)
+  time = time + dt
+  while time >= 1/FPS do
+    time = time - 1/FPS
+    physics.run_physics(player, blocks, 1/FPS)
   end
 end
 

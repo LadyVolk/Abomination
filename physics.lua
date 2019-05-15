@@ -91,5 +91,19 @@ function physics.check_collision(object1, object2)
   end
 end
 
+function physics.run_physics(player, blocks, dt)
+  player:update_new_pos(dt)
+  for _, bloco in ipairs(blocks) do
+    bloco:update_new_pos(dt)
+  end
+  physics.collision(player, blocks)
+  --actually change pos after checking for overlapping
+  player:update_pos()
+  physics.stay_inside(player)
+  for _, bloco in ipairs(blocks) do
+    bloco:update_pos()
+    physics.stay_inside(bloco)
+  end
+end
 
 return physics
