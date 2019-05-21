@@ -15,7 +15,7 @@ end
 
 
 function physics.collision(elements)
-  
+
   for _, element in ipairs (elements) do
     if element.kinetic then
       for _, element2 in ipairs (elements) do

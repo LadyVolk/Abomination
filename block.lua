@@ -1,9 +1,9 @@
 local physics = require "physics"
 
 local function draw(block)
-  if block.type == "static" then
+  if not block.kinetic then
     love.graphics.setColor(1, 1, 0, 1)
-  elseif block.type == "fall" then
+  elseif block.kinetic then
     love.graphics.setColor(0, 1, 1, 1)
   end
 
@@ -19,7 +19,7 @@ local function update_pos(block)
 end
 
 local function update_new_pos(block, dt)
-  if block.type == "fall" then
+  if block.kinetic then
     --block fall due to gravity
     block.s_vector[2] = math.min(block.s_vector[2] + physics.gravity * dt,
                                   block.max_speed[2])
@@ -45,7 +45,7 @@ local function create_block(pos, width, height, kinetic)
     update_pos = update_pos,
 
     pos = pos,
-    new_pos = {},
+    new_pos = {pos[1], pos[2]},
     s_vector = {0, 0},
     max_speed = {0, 700}
   }

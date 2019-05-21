@@ -11,7 +11,7 @@ function love.update(dt)
   time = time + dt
   while time >= 1/FPS do
     time = time - 1/FPS
-    level:update(dt)
+    level:update(1/FPS)
   end
 end
 

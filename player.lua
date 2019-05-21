@@ -1,37 +1,10 @@
 local physics = require "physics"
-local function create_player(pos)
-  local player = {
-    pos = pos,
-    new_pos =  {},
-
-    width = 30,
-    height = 30,
-
-    s_vector = {0, 0},
-    max_speed = {300, 700},
-    move_force = 400, --horizontal speed
-    stop_force = 500,
-    jump_force = 500,
-
-    type = "player",
-
-    jumping = false,
-
-    kinetic = true,
-
-    --functions
-    draw = draw,
-    update_pos = update_pos,
-    update_new_pos = update_new_pos,
-    keypressed = keypressed,
-  }
-  return player
-end
 
 local function draw(self)
   love.graphics.setColor(1, 0, 1, 1)
   love.graphics.rectangle("fill", self.pos[1], self.pos[2],
-  self.width, self.height)
+                          self.width, self.height)
+                        
 end
 
 local function update_pos(self)
@@ -69,6 +42,35 @@ local function keypressed(self, key)
     self.jumping = true
     self.s_vector[2] = -self.jump_force
   end
+end
+
+local function create_player(pos)
+  local player = {
+    pos = pos,
+    new_pos =  {pos[1], pos[2]},
+
+    width = 30,
+    height = 30,
+
+    s_vector = {0, 0},
+    max_speed = {300, 700},
+    move_force = 400, --horizontal speed
+    stop_force = 500,
+    jump_force = 500,
+
+    type = "player",
+
+    jumping = false,
+
+    kinetic = true,
+
+    --functions
+    draw = draw,
+    update_pos = update_pos,
+    update_new_pos = update_new_pos,
+    keypressed = keypressed,
+  }
+  return player
 end
 
 return create_player
