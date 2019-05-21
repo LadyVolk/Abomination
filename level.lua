@@ -6,7 +6,7 @@ local function draw(self)
   love.graphics.push()
 
   love.graphics.translate(s_w/2, s_h/2)
-  love.graphics.rotate(self.rotation)
+  love.graphics.rotate(physics.get_rotation())
   love.graphics.translate(-s_w/2, -s_h/2)
 
   for _, element in ipairs(self.elements) do
@@ -23,6 +23,11 @@ end
 
 local function keypressed(self, key)
   self.player:keypressed(key)
+  if key == 'e' then
+    physics.rotate(math.pi/2)
+  elseif key == 'q' then
+    physics.rotate(-math.pi/2)
+  end
 end
 
 local function create_level(number)
@@ -34,7 +39,6 @@ local function create_level(number)
     number = number,
     elements = {},
     player = player,
-    rotation = 0,
 
     --methods
     draw = draw,

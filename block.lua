@@ -21,8 +21,8 @@ end
 local function update_new_pos(block, dt)
   if block.kinetic then
     --block fall due to gravity
-    block.s_vector[2] = math.min(block.s_vector[2] + physics.gravity * dt,
-                                  block.max_speed[2])
+    physics.apply_gravity(block, dt)
+
     --update block position
     block.new_pos[1] = block.pos[1] + block.s_vector[1] * dt
     block.new_pos[2] = block.pos[2] + block.s_vector[2] * dt

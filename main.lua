@@ -22,6 +22,7 @@ end
 function love.keypressed(key)
   level:keypressed(key)
 end
+
 function love.mousepressed(x, y, button, isTouch)
   if button == 1 then
     table.insert(level.elements,

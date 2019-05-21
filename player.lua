@@ -4,7 +4,7 @@ local function draw(self)
   love.graphics.setColor(1, 0, 1, 1)
   love.graphics.rectangle("fill", self.pos[1], self.pos[2],
                           self.width, self.height)
-                        
+
 end
 
 local function update_pos(self)
@@ -29,8 +29,8 @@ local function update_new_pos(self, dt)
   end
 
   --gravity
-  self.s_vector[2] = math.min(self.s_vector[2] + physics.gravity * dt,
-                              self.max_speed[2])
+  physics.apply_gravity(self, dt)
+
   --change position
   self.new_pos[1] = self.pos[1] + self.s_vector[1] * dt
   self.new_pos[2] = self.pos[2] + self.s_vector[2] * dt

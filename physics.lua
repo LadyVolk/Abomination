@@ -1,6 +1,6 @@
 local physics = {}
-physics.gravity = 700
-
+physics.gravity = {0, 700}
+physics.rotation = 0
 --collision between two rectangles
 function physics.newrect_with_oldrect(rect1, rect2)
   if rect1.new_pos[2] + rect1.height <= rect2.pos[2] or
@@ -97,6 +97,35 @@ function physics.run_physics(elements, dt)
     element:update_pos()
     physics.stay_inside(element)
   end
+end
+
+function physics.apply_gravity(element, dt)
+  local g = physics.get_gravity()
+  print(g[1], g[2])
+  element.s_vector[1] = element.s_vector[1] + g[1] * dt
+  element.s_vector[2] = element.s_vector[2] + g[2] * dt
+end
+
+function physics.get_gravity()
+  return physics.rotate_vector(physics.gravity, -physics.get_rotation())
+end
+
+function physics.get_rotation()
+  return physics.rotation
+end
+
+function physics.rotate(angle)
+  physics.rotation = physics.rotation + angle
+end
+
+function physics.rotate_vector(vector, angle)
+  local cos = math.cos(angle)
+  local sin = math.sin(angle)
+  local final_vector = {}
+  final_vector[1] = vector[1]*cos - vector[2]*sin
+  final_vector[2] = vector[1]*sin + vector[2]*cos
+
+  return final_vector
 end
 
 return physics
