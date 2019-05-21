@@ -14,18 +14,41 @@ end
 
 local function update_new_pos(self, dt)
 
-  if love.keyboard.isDown('a') then
-    self.s_vector[1] = math.max(self.s_vector[1] - self.move_force * dt,
-                                -self.max_speed[1])
-  elseif self.s_vector[1] < 0 then
-     self.s_vector[1] = math.min(self.s_vector[1] + self.stop_force * dt, 0)
-  end
+  if love.keyboard.isDown('a') and not love.keyboard.isDown('d') then
+    local move = physics.rotate_vector({-self.move_force, 0}, -physics.get_rotation())
 
-  if love.keyboard.isDown('d') then
-    self.s_vector[1] = math.min(self.s_vector[1] + self.move_force * dt,
-                                self.max_speed[1])
-  elseif self.s_vector[1] > 0 then
-    self.s_vector[1] = math.max(self.s_vector[1] - self.stop_force * dt, 0)
+    self.s_vector[1] = math.min(self.s_vector[1] + move[1] * dt, self.max_speed[1])
+    self.s_vector[1] = math.max(self.s_vector[1], -self.max_speed[1])
+
+    self.s_vector[2] = math.min(self.s_vector[2] + move[2] * dt, self.max_speed[1])
+    self.s_vector[2] = math.max(self.s_vector[2], -self.max_speed[1])
+
+
+  elseif love.keyboard.isDown('d') and not love.keyboard.isDown('a') then
+    local move = physics.rotate_vector({self.move_force, 0}, -physics.get_rotation())
+    self.s_vector[1] = math.min(self.s_vector[1] + move[1] * dt, self.max_speed[1])
+    self.s_vector[1] = math.max(self.s_vector[1], -self.max_speed[1])
+
+    self.s_vector[2] = math.min(self.s_vector[2] + move[2] * dt, self.max_speed[1])
+    self.s_vector[2] = math.max(self.s_vector[2], -self.max_speed[1])
+
+  else
+    local stop = physics.rotate_vector({1, 0}, -physics.get_rotation())
+    if stop[1] ~= 0 then
+      if self.s_vector[1] > 0 then
+        self.s_vector[1] = math.max(self.s_vector[1] - self.stop_force * dt, 0)
+      else
+        self.s_vector[1] = math.min(self.s_vector[1] + self.stop_force * dt, 0)
+      end
+    end
+      --for y
+    if stop[2] ~= 0 then
+      if self.s_vector[2] > 0 then
+        self.s_vector[2] = math.max(self.s_vector[2] - self.stop_force * dt, 0)
+      else
+        self.s_vector[2] = math.min(self.s_vector[2] + self.stop_force * dt, 0)
+      end
+    end
   end
 
   --gravity

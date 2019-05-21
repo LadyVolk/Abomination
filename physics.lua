@@ -101,7 +101,6 @@ end
 
 function physics.apply_gravity(element, dt)
   local g = physics.get_gravity()
-  print(g[1], g[2])
   element.s_vector[1] = element.s_vector[1] + g[1] * dt
   element.s_vector[2] = element.s_vector[2] + g[2] * dt
 end
