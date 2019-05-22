@@ -63,7 +63,14 @@ local function keypressed(self, key)
   screen_w, screen_h = love.graphics.getDimensions()
   if key == 'space' and not self.jumping then
     self.jumping = true
-    self.s_vector[2] = -self.jump_force
+    local jump = physics.rotate_vector({0, -self.jump_force}, -physics.get_rotation())
+
+    if jump[2] ~= 0 then
+      self.s_vector[2] = jump[2]
+    end
+    if jump[1] ~= 0 then
+      self.s_vector[1] = jump[1]
+    end
   end
 end
 

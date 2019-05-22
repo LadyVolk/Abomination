@@ -13,9 +13,7 @@ function physics.newrect_with_oldrect(rect1, rect2)
   end
 end
 
-
 function physics.collision(elements)
-
   for _, element in ipairs (elements) do
     if element.kinetic then
       for _, element2 in ipairs (elements) do
@@ -29,30 +27,55 @@ end
 
 function physics.stay_inside(object)
   screen_w, screen_h = love.graphics.getDimensions()
+
     --when object gets to left of screen
   if object.pos[1] < 0 then
     object.pos[1] = 0
+    if physics.get_rotation() == 3*math.pi/2 or physics.get_rotation() == math.pi/2 then
+      object.s_vector[1] = 0
+    end
+    if object.type == "player" and physics.get_rotation() == 3*math.pi/2 then
+      object.jumping = false
+    end
   end
+
     --when object gets to right of screen
   if object.pos[1] > screen_w - object.width then
     object.pos[1] = screen_w - object.width
+    if physics.get_rotation() == math.pi/2 or physics.get_rotation() == 3*math.pi/2 then
+      object.s_vector[1] = 0
+    end
+    if object.type == "player" and physics.get_rotation() == math.pi/2 then
+      object.jumping = false
+    end
   end
+
     --when objects gets to top of screen
   if object.pos[2] < 0 then
     object.pos[2] = 0
-    object.s_vector[2] = 0
+    if physics.get_rotation() == math.pi or physics.get_rotation() == 0 then
+      object.s_vector[2] = 0
+    end
+    if object.type == "player" and physics.get_rotation() == math.pi then
+      object.jumping = false
+    end
+
   end
+
     --when player gets below of screen
   if object.pos[2] > screen_h - object.height then
     object.pos[2] = screen_h - object.height
-    object.s_vector[2] = 0
-    if object.type == "player" then
+    if physics.get_rotation() == 0 or physics.get_rotation() == math.pi then
+      object.s_vector[2] = 0
+    end
+    if object.type == "player" and physics.get_rotation() == 0 then
       object.jumping = false
     end
   end
 end
 
 function physics.check_collision(object1, object2)
+
   if physics.newrect_with_oldrect(object1, object2) then
     local zy
     --object below
@@ -115,6 +138,12 @@ end
 
 function physics.rotate(angle)
   physics.rotation = physics.rotation + angle
+  while physics.rotation >= 2*math.pi do
+    physics.rotation = physics.rotation - 2*math.pi
+  end
+  while physics.rotation < 0 do
+    physics.rotation = physics.rotation + 2*math.pi
+  end
 end
 
 function physics.rotate_vector(vector, angle)
@@ -126,5 +155,4 @@ function physics.rotate_vector(vector, angle)
 
   return final_vector
 end
-
 return physics
