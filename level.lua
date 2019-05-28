@@ -5,9 +5,6 @@ local function draw(self)
 
   love.graphics.push()
 
-  love.graphics.translate(s_w/2, s_h/2)
-  love.graphics.rotate(physics.get_rotation())
-  love.graphics.translate(-s_w/2, -s_h/2)
 
   for _, element in ipairs(self.elements) do
     element:draw()
@@ -24,9 +21,9 @@ end
 local function keypressed(self, key)
   self.player:keypressed(key)
   if key == 'e' then
-    physics.rotate(math.pi/2)
+    physics.rotate(self.elements, math.pi/2)
   elseif key == 'q' then
-    physics.rotate(-math.pi/2)
+    physics.rotate(self.elements, -math.pi/2)
   end
 end
 

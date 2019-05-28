@@ -1,5 +1,5 @@
 local physics = {}
-physics.gravity = {0, 700}
+physics.gravity = 700
 physics.rotation = 0
 --collision between two rectangles
 function physics.newrect_with_oldrect(rect1, rect2)
@@ -31,51 +31,30 @@ function physics.stay_inside(object)
     --when object gets to left of screen
   if object.pos[1] - object.width/2 < 0 then
     object.pos[1] = object.width/2
-    if physics.get_rotation() == 3*math.pi/2 or physics.get_rotation() == math.pi/2 then
-      object.s_vector[1] = 0
-    end
-    if object.type == "player" and physics.get_rotation() == 3*math.pi/2 then
-      object.jumping = false
-    end
   end
 
     --when object gets to right of screen
-  if object.pos[1] - object.width/2 > screen_w then
+  if object.pos[1] + object.width/2 > screen_w then
     object.pos[1] = screen_w - object.width/2
-    if physics.get_rotation() == math.pi/2 or physics.get_rotation() == 3*math.pi/2 then
-      object.s_vector[1] = 0
-    end
-    if object.type == "player" and physics.get_rotation() == math.pi/2 then
-      object.jumping = false
-    end
   end
 
     --when objects gets to top of screen
   if object.pos[2] - object.height/2 < 0 then
     object.pos[2] = object.height/2
-    if physics.get_rotation() == math.pi or physics.get_rotation() == 0 then
-      object.s_vector[2] = 0
-    end
-    if object.type == "player" and physics.get_rotation() == math.pi then
-      object.jumping = false
-    end
-
+    object.s_vector[2] = 0
   end
 
     --when player gets below of screen
   if object.pos[2] + object.height/2 > screen_h then
     object.pos[2] = screen_h - object.height/2
-    if physics.get_rotation() == 0 or physics.get_rotation() == math.pi then
-      object.s_vector[2] = 0
-    end
-    if object.type == "player" and physics.get_rotation() == 0 then
+    object.s_vector[2] = 0
+    if object.type == "player" then
       object.jumping = false
     end
   end
 end
 
 function physics.check_collision(object1, object2)
-
   if physics.newrect_with_oldrect(object1, object2) then
     local zy
     --object1 below
@@ -124,25 +103,21 @@ end
 
 function physics.apply_gravity(element, dt)
   local g = physics.get_gravity()
-  element.s_vector[1] = element.s_vector[1] + g[1] * dt
-  element.s_vector[2] = element.s_vector[2] + g[2] * dt
+  element.s_vector[2] = element.s_vector[2] + g * dt
 end
 
 function physics.get_gravity()
-  return physics.rotate_vector(physics.gravity, -physics.get_rotation())
+  return physics.gravity
 end
 
 function physics.get_rotation()
   return physics.rotation
 end
 
-function physics.rotate(angle)
-  physics.rotation = physics.rotation + angle
-  while physics.rotation >= 2*math.pi do
-    physics.rotation = physics.rotation - 2*math.pi
-  end
-  while physics.rotation < 0 do
-    physics.rotation = physics.rotation + 2*math.pi
+--rotate all objects
+function physics.rotate(elements, angle)
+  for _, object in ipairs(elements) do
+    physics.rotate_element(object, angle)
   end
 end
 
@@ -155,4 +130,14 @@ function physics.rotate_vector(vector, angle)
 
   return final_vector
 end
+
+function physics.rotate_element(object, angle)
+  local v = {}
+  v[1] = object.pos[1] - love.graphics.getWidth()/2
+  v[2] = object.pos[2] - love.graphics.getHeight()/2
+  physics.rotate_vector(v, angle)
+  object.pos[1] = v[1] + love.graphics.getWidth()/2
+  object.pos[2] = v[2] + love.graphics.getHeight()/2
+end
+
 return physics
