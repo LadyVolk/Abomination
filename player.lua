@@ -2,7 +2,8 @@ local physics = require "physics"
 
 local function draw(self)
   love.graphics.setColor(1, 0, 1, 1)
-  love.graphics.rectangle("fill", self.pos[1], self.pos[2],
+  love.graphics.rectangle("fill", self.pos[1] - self.width/2,
+                          self.pos[2]- self.height/2,
                           self.width, self.height)
 
 end

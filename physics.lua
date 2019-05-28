@@ -3,10 +3,10 @@ physics.gravity = {0, 700}
 physics.rotation = 0
 --collision between two rectangles
 function physics.newrect_with_oldrect(rect1, rect2)
-  if rect1.new_pos[2] + rect1.height <= rect2.pos[2] or
-     rect1.new_pos[2] >= rect2.pos[2] + rect2.height or
-     rect1.new_pos[1] + rect1.width <= rect2.pos[1] or
-     rect1.new_pos[1] >= rect2.pos[1] + rect2.width then
+  if rect1.new_pos[2] + rect1.height/2 <= rect2.pos[2] - rect2.height/2 or
+     rect1.new_pos[2] - rect1.height/2 >= rect2.pos[2] + rect2.height/2 or
+     rect1.new_pos[1] + rect1.width/2 <= rect2.pos[1] - rect2.width/2 or
+     rect1.new_pos[1] - rect1.width/2 >= rect2.pos[1] + rect2.width/2 then
     return false
   else
     return true
@@ -29,8 +29,8 @@ function physics.stay_inside(object)
   screen_w, screen_h = love.graphics.getDimensions()
 
     --when object gets to left of screen
-  if object.pos[1] < 0 then
-    object.pos[1] = 0
+  if object.pos[1] - object.width/2 < 0 then
+    object.pos[1] = object.width/2
     if physics.get_rotation() == 3*math.pi/2 or physics.get_rotation() == math.pi/2 then
       object.s_vector[1] = 0
     end
@@ -40,8 +40,8 @@ function physics.stay_inside(object)
   end
 
     --when object gets to right of screen
-  if object.pos[1] > screen_w - object.width then
-    object.pos[1] = screen_w - object.width
+  if object.pos[1] - object.width/2 > screen_w then
+    object.pos[1] = screen_w - object.width/2
     if physics.get_rotation() == math.pi/2 or physics.get_rotation() == 3*math.pi/2 then
       object.s_vector[1] = 0
     end
@@ -51,8 +51,8 @@ function physics.stay_inside(object)
   end
 
     --when objects gets to top of screen
-  if object.pos[2] < 0 then
-    object.pos[2] = 0
+  if object.pos[2] - object.height/2 < 0 then
+    object.pos[2] = object.height/2
     if physics.get_rotation() == math.pi or physics.get_rotation() == 0 then
       object.s_vector[2] = 0
     end
@@ -63,8 +63,8 @@ function physics.stay_inside(object)
   end
 
     --when player gets below of screen
-  if object.pos[2] > screen_h - object.height then
-    object.pos[2] = screen_h - object.height
+  if object.pos[2] + object.height/2 > screen_h then
+    object.pos[2] = screen_h - object.height/2
     if physics.get_rotation() == 0 or physics.get_rotation() == math.pi then
       object.s_vector[2] = 0
     end
@@ -78,21 +78,21 @@ function physics.check_collision(object1, object2)
 
   if physics.newrect_with_oldrect(object1, object2) then
     local zy
-    --object below
+    --object1 below
     if object1.s_vector[2] < 0 then
-      zy = object2.pos[2] + object2.height -object1.new_pos[2]
+      zy = (object2.pos[2] + object2.height/2) - (object1.pos[2] - object1.height/2)
     --object1 above
     else
-      zy = object2.pos[2] -object1.new_pos[2] -object1.height
+      zy = (object2.pos[2] - object2.height/2) - (object1.pos[2] + object1.height/2)
     end
 
     local zx
-    --object is right
+    --object1 is right
     if object1.s_vector[1] < 0 then
-      zx = object2.pos[1] + object2.width - object1.new_pos[1]
-    --object is left
+      zx = (object2.pos[1] + object2.width/2) - (object1.pos[1] - object1.width/2)
+    --object1 is left
     else
-      zx = object2.pos[1] -object1.width -object1.new_pos[1]
+      zx = (object2.pos[1] - object2.width/2) - (object1.pos[1] + object1.width/2)
     end
 
     if math.abs(zy) < math.abs(zx) then

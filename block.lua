@@ -3,11 +3,12 @@ local physics = require "physics"
 local function draw(block)
   if not block.kinetic then
     love.graphics.setColor(1, 1, 0, 1)
-  elseif block.kinetic then
+  else
     love.graphics.setColor(0, 1, 1, 1)
   end
 
-  love.graphics.rectangle("fill", block.pos[1], block.pos[2],
+  love.graphics.rectangle("fill", block.pos[1] - block.width/2,
+                          block.pos[2] - block.height/2,
                           block.width, block.height)
 end
 
