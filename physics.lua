@@ -117,6 +117,7 @@ end
 --rotate all objects
 function physics.rotate(elements, angle)
   for _, object in ipairs(elements) do
+    print(object.type, object.kinetic)
     physics.rotate_element(object, angle)
   end
 end
@@ -127,7 +128,6 @@ function physics.rotate_vector(vector, angle)
   local final_vector = {}
   final_vector[1] = vector[1]*cos - vector[2]*sin
   final_vector[2] = vector[1]*sin + vector[2]*cos
-
   return final_vector
 end
 
@@ -135,9 +135,14 @@ function physics.rotate_element(object, angle)
   local v = {}
   v[1] = object.pos[1] - love.graphics.getWidth()/2
   v[2] = object.pos[2] - love.graphics.getHeight()/2
-  physics.rotate_vector(v, angle)
+
+  v = physics.rotate_vector(v, angle)
+
   object.pos[1] = v[1] + love.graphics.getWidth()/2
   object.pos[2] = v[2] + love.graphics.getHeight()/2
+
+  object.new_pos[1] = object.pos[1]
+  object.new_pos[2] = object.pos[2]
 end
 
 return physics
