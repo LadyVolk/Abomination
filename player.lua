@@ -2,10 +2,14 @@ local physics = require "physics"
 
 local function draw(self)
   love.graphics.setColor(1, 0, 1, 1)
-  love.graphics.rectangle("fill", self.pos[1] - self.width/2,
-                          self.pos[2]- self.height/2,
-                          self.width, self.height)
 
+  love.graphics.push()
+  love.graphics.translate(self.pos[1], self.pos[2])
+  love.graphics.rotate(-physics.get_rotation())
+  love.graphics.rectangle("fill", -self.width/2,
+                          -self.height/2,
+                          self.width, self.height)
+  love.graphics.pop()
 end
 
 local function update_pos(self)

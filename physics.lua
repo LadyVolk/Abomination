@@ -92,10 +92,17 @@ function physics.run_physics(elements, dt)
   if physics.rotation ~= 0 then
     local angle
     --define rotation
-    if math.abs(physics.rotation) < 0.01 then
+    --[[if math.abs(physics.rotation) < 0.01 then
       angle = physics.rotation
     else
-      angle = physics.rotation*0.1
+      angle = physics.rotation*0.04
+    end]]
+
+    local limit = .03
+    if physics.rotation < 0 then
+      angle = math.max(physics.rotation, -limit)
+    else
+      angle = math.min(physics.rotation, limit)
     end
 
     physics.rotation = physics.rotation - angle
@@ -136,7 +143,9 @@ end
 
 --rotate all objects
 function physics.rotate(angle)
-  physics.rotation = physics.rotation + angle
+  if physics.rotation == 0 then
+    physics.rotation = physics.rotation + angle
+  end
 end
 
 function physics.rotate_vector(vector, angle)

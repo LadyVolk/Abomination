@@ -6,10 +6,13 @@ local function draw(block)
   else
     love.graphics.setColor(0, 1, 1, 1)
   end
-
-  love.graphics.rectangle("fill", block.pos[1] - block.width/2,
-                          block.pos[2] - block.height/2,
+  love.graphics.push()
+  love.graphics.translate(block.pos[1], block.pos[2])
+  love.graphics.rotate(-physics.get_rotation())
+  love.graphics.rectangle("fill", -block.width/2,
+                          -block.height/2,
                           block.width, block.height)
+  love.graphics.pop()
 end
 
 local function update_pos(block)
