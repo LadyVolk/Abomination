@@ -1,8 +1,10 @@
 local physics = require "physics"
 
 local function draw(block)
-  if not block.kinetic then
-    love.graphics.setColor(1, 1, 0, 1)
+  if block.death then
+    love.graphics.setColor(1, 1, 1, 1)
+  elseif not block.kinetic then
+    love.graphics.setColor(1, 0.5, 0, 1)
   else
     love.graphics.setColor(0, 1, 1, 1)
   end
@@ -33,10 +35,12 @@ local function update_new_pos(block, dt)
   end
 end
 
-local function create_block(pos, size, kinetic)
+local function create_block(pos, size, kinetic, death)
   local block = {
 
     type = "block",
+
+    death = death,
 
     kinetic = kinetic,
 

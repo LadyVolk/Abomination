@@ -26,9 +26,9 @@ end
 function love.mousepressed(x, y, button, isTouch)
   if button == 1 then
     table.insert(level.elements,
-                 require "block" ({x, y}, 30, false))
+                 require "block" ({x, y}, 30, false, false))
   elseif button == 2 then
     table.insert(level.elements,
-                 require "block" ({x, y}, 30, true))
+                 require "block" ({x, y}, 30, true, false))
   end
 end
