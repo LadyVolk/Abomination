@@ -88,15 +88,35 @@ function physics.check_collision(object1, object2)
 end
 
 function physics.run_physics(elements, dt)
+  --rotate elements
+  if physics.rotation ~= 0 then
+    local angle
+    --define rotation
+    if math.abs(physics.rotation) < 0.01 then
+      angle = physics.rotation
+    else
+      angle = physics.rotation*0.1
+    end
 
-  for _, element in ipairs(elements) do
-    element:update_new_pos(dt)
+    physics.rotation = physics.rotation - angle
+    for _, object in ipairs(elements) do
+      physics.rotate_element(object, angle)
+    end
   end
 
-  physics.collision(elements)
+  if physics.rotation == 0 then
+    for _, element in ipairs(elements) do
+      element:update_new_pos(dt)
+    end
+
+    physics.collision(elements)
+
+    for _, element in ipairs(elements) do
+      element:update_pos()
+    end
+  end
 
   for _, element in ipairs(elements) do
-    element:update_pos()
     physics.stay_inside(element)
   end
 end
@@ -115,10 +135,8 @@ function physics.get_rotation()
 end
 
 --rotate all objects
-function physics.rotate(elements, angle)
-  for _, object in ipairs(elements) do
-    physics.rotate_element(object, angle)
-  end
+function physics.rotate(angle)
+  physics.rotation = physics.rotation + angle
 end
 
 function physics.rotate_vector(vector, angle)
@@ -142,6 +160,7 @@ function physics.rotate_element(object, angle)
 
   object.new_pos[1] = object.pos[1]
   object.new_pos[2] = object.pos[2]
+  object.s_vector = {0, 0}
 end
 
 return physics
