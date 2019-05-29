@@ -30,15 +30,15 @@ local function update_new_pos(block, dt)
   end
 end
 
-local function create_block(pos, width, height, kinetic)
+local function create_block(pos, size, kinetic)
   local block = {
 
     type = "block",
 
     kinetic = kinetic,
 
-    width = width,
-    height = height,
+    width = size,
+    height = size,
 
     --methods
     draw = draw,

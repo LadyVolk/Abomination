@@ -117,7 +117,6 @@ end
 --rotate all objects
 function physics.rotate(elements, angle)
   for _, object in ipairs(elements) do
-    print(object.type, object.kinetic)
     physics.rotate_element(object, angle)
   end
 end
