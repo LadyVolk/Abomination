@@ -30,7 +30,7 @@ end
 local function create_level(number)
   local level_data = require("levels."..number)
 
-  local player = require "player"{400, 400}
+  local player = require "player"(level_data.player_ipos)
 
   local level = {
     number = number,

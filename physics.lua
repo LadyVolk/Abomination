@@ -3,10 +3,10 @@ physics.gravity = 700
 physics.rotation = 0
 --collision between two rectangles
 function physics.newrect_with_oldrect(rect1, rect2)
-  if rect1.new_pos[2] + rect1.height/2 <= rect2.pos[2] - rect2.height/2 or
-     rect1.new_pos[2] - rect1.height/2 >= rect2.pos[2] + rect2.height/2 or
-     rect1.new_pos[1] + rect1.width/2 <= rect2.pos[1] - rect2.width/2 or
-     rect1.new_pos[1] - rect1.width/2 >= rect2.pos[1] + rect2.width/2 then
+  if rect1.new_pos[2] + rect1.height/2 < rect2.pos[2] - rect2.height/2 or
+     rect1.new_pos[2] - rect1.height/2 > rect2.pos[2] + rect2.height/2 or
+     rect1.new_pos[1] + rect1.width/2 < rect2.pos[1] - rect2.width/2 or
+     rect1.new_pos[1] - rect1.width/2 > rect2.pos[1] + rect2.width/2 then
     return false
   else
     return true
@@ -58,20 +58,20 @@ function physics.check_collision(object1, object2)
   if physics.newrect_with_oldrect(object1, object2) then
     local zy
     --object1 below
-    if object1.s_vector[2] < 0 then
-      zy = (object2.pos[2] + object2.height/2) - (object1.pos[2] - object1.height/2)
+    if object1.new_pos[2] > object2.pos[2] then
+      zy = (object2.pos[2] + object2.height/2) - (object1.new_pos[2] - object1.height/2)
     --object1 above
     else
-      zy = (object2.pos[2] - object2.height/2) - (object1.pos[2] + object1.height/2)
+      zy = (object2.pos[2] - object2.height/2) - (object1.new_pos[2] + object1.height/2)
     end
 
     local zx
     --object1 is right
-    if object1.s_vector[1] < 0 then
-      zx = (object2.pos[1] + object2.width/2) - (object1.pos[1] - object1.width/2)
+    if object1.new_pos[1] > object2.pos[1] then
+      zx = (object2.pos[1] + object2.width/2) - (object1.new_pos[1] - object1.width/2)
     --object1 is left
     else
-      zx = (object2.pos[1] - object2.width/2) - (object1.pos[1] + object1.width/2)
+      zx = (object2.pos[1] - object2.width/2) - (object1.new_pos[1] + object1.width/2)
     end
 
     if math.abs(zy) < math.abs(zx) then
