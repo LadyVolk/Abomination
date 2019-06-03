@@ -19,16 +19,24 @@ local function update(self, dt)
 end
 
 local function keypressed(self, key)
-  self.player:keypressed(key)
-  if key == 'e' then
-    physics.rotate(math.pi/2)
-  elseif key == 'q' then
-    physics.rotate(-math.pi/2)
+
+  if self.player then
+    self.player:keypressed(key)
+    if key == 'e' then
+      physics.rotate(math.pi/2)
+    elseif key == 'q' then
+      physics.rotate(-math.pi/2)
+    end
   end
 end
 
 local function win(level)
-  print("you died")
+  level.player = nil
+  for i, element in ipairs(level.elements) do
+    if element.type == "player" then
+      table.remove(level.elements, i)
+    end
+  end
 end
 
 local function create_level(number)
