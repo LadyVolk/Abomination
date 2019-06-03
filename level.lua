@@ -27,21 +27,27 @@ local function keypressed(self, key)
   end
 end
 
+local function win(level)
+  print("you died")
+end
+
 local function create_level(number)
   local level_data = require("levels."..number)
-
-  local player = require "player"(level_data.player_ipos)
 
   local level = {
     number = number,
     elements = {},
-    player = player,
 
     --methods
     draw = draw,
     update = update,
     keypressed = keypressed,
+    win = win,
   }
+
+  local player = require "player"(level_data.player_ipos, level)
+
+  level.player = player
 
   for _, bloco in ipairs(level_data.blocks) do
     table.insert(level.elements, bloco)

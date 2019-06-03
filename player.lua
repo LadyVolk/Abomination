@@ -52,7 +52,11 @@ local function keypressed(self, key)
   end
 end
 
-local function create_player(pos)
+local function win(self)
+  self.level:win()
+end
+
+local function create_player(pos, level)
   local player = {
     pos = pos,
     new_pos =  {pos[1], pos[2]},
@@ -72,11 +76,14 @@ local function create_player(pos)
 
     kinetic = true,
 
+    level = level,
+
     --functions
     draw = draw,
     update_pos = update_pos,
     update_new_pos = update_new_pos,
     keypressed = keypressed,
+    win = win,
   }
   return player
 end
