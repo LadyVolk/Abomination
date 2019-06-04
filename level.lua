@@ -36,6 +36,7 @@ local function _win(level)
       table.remove(level.elements, i)
     end
   end
+  GAMESTATE.switch(STATES.died, level.next_lvl)
 end
 
 local function _create_level(number)
@@ -44,6 +45,8 @@ local function _create_level(number)
   local level = {
     number = number,
     elements = {},
+
+    next_lvl = level_data.next_lvl,
 
     --methods
     draw = _draw,

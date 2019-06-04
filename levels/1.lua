@@ -28,5 +28,7 @@ local _level = {
 
   player_ipos = {200, 100},
 
+  next_lvl = 2,
+
 }
 return _level
