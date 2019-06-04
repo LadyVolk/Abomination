@@ -19,7 +19,6 @@ local function update(self, dt)
 end
 
 local function keypressed(self, key)
-
   if self.player then
     self.player:keypressed(key)
     if key == 'e' then
