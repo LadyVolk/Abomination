@@ -1,6 +1,6 @@
-local physics = require "physics"
+local Physics = require "physics"
 
-local function draw(self)
+local function _draw(self)
   local s_w, s_h = love.graphics.getDimensions()
 
   love.graphics.push()
@@ -14,22 +14,22 @@ local function draw(self)
 
 end
 
-local function update(self, dt)
-  physics.run_physics(self.elements, dt)
+local function _update(self, dt)
+  Physics.run_physics(self.elements, dt)
 end
 
-local function keypressed(self, key)
+local function _keypressed(self, key)
   if self.player then
     self.player:keypressed(key)
     if key == 'e' then
-      physics.rotate(math.pi/2)
+      Physics.rotate(math.pi/2)
     elseif key == 'q' then
-      physics.rotate(-math.pi/2)
+      Physics.rotate(-math.pi/2)
     end
   end
 end
 
-local function win(level)
+local function _win(level)
   level.player = nil
   for i, element in ipairs(level.elements) do
     if element.type == "player" then
@@ -38,7 +38,7 @@ local function win(level)
   end
 end
 
-local function create_level(number)
+local function _create_level(number)
   local level_data = require("levels."..number)
 
   local level = {
@@ -46,10 +46,10 @@ local function create_level(number)
     elements = {},
 
     --methods
-    draw = draw,
-    update = update,
-    keypressed = keypressed,
-    win = win,
+    draw = _draw,
+    update = _update,
+    keypressed = _keypressed,
+    win = _win,
   }
 
   local player = require "player"(level_data.player_ipos, level)
@@ -65,4 +65,4 @@ local function create_level(number)
   return level
 end
 
-return create_level
+return _create_level

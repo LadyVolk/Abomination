@@ -1,6 +1,6 @@
-local physics = require "physics"
+local Physics = require "physics"
 
-local function draw(block)
+local function _draw(block)
   if block.death then
     love.graphics.setColor(1, 1, 1, 1)
   elseif not block.kinetic then
@@ -10,24 +10,24 @@ local function draw(block)
   end
   love.graphics.push()
   love.graphics.translate(block.pos[1], block.pos[2])
-  love.graphics.rotate(-physics.get_rotation())
+  love.graphics.rotate(-Physics.get_rotation())
   love.graphics.rectangle("fill", -block.width/2,
                           -block.height/2,
                           block.width, block.height)
   love.graphics.pop()
 end
 
-local function update_pos(block)
+local function _update_pos(block)
   if block.new_pos[1] and block.new_pos[2] then
     block.pos[1] = block.new_pos[1]
     block.pos[2] = block.new_pos[2]
   end
 end
 
-local function update_new_pos(block, dt)
+local function _update_new_pos(block, dt)
   if block.kinetic then
     --block fall due to gravity
-    physics.apply_gravity(block, dt)
+    Physics.apply_gravity(block, dt)
 
     --update block position
     block.new_pos[1] = block.pos[1] + block.s_vector[1] * dt
@@ -35,7 +35,7 @@ local function update_new_pos(block, dt)
   end
 end
 
-local function create_block(pos, size, kinetic, death)
+local function _create_block(pos, size, kinetic, death)
   local block = {
 
     type = "block",
@@ -48,9 +48,9 @@ local function create_block(pos, size, kinetic, death)
     height = size,
 
     --methods
-    draw = draw,
-    update_new_pos = update_new_pos,
-    update_pos = update_pos,
+    draw = _draw,
+    update_new_pos = _update_new_pos,
+    update_pos = _update_pos,
 
     pos = pos,
     new_pos = {pos[1], pos[2]},
@@ -60,4 +60,4 @@ local function create_block(pos, size, kinetic, death)
   return block
 end
 
-return create_block
+return _create_block

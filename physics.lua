@@ -1,8 +1,8 @@
-local physics = {}
-physics.gravity = 700
-physics.rotation = 0
+local _physics = {}
+_physics.gravity = 700
+_physics.rotation = 0
 --collision between two rectangles
-function physics.newrect_with_oldrect(rect1, rect2)
+function _physics.newrect_with_oldrect(rect1, rect2)
   if rect1.new_pos[2] + rect1.height/2 <= rect2.pos[2] - rect2.height/2 or
      rect1.new_pos[2] - rect1.height/2 >= rect2.pos[2] + rect2.height/2 or
      rect1.new_pos[1] + rect1.width/2 <= rect2.pos[1] - rect2.width/2 or
@@ -13,19 +13,19 @@ function physics.newrect_with_oldrect(rect1, rect2)
   end
 end
 
-function physics.collision(elements)
+function _physics.collision(elements)
   for _, element in ipairs (elements) do
     if element.kinetic then
       for _, element2 in ipairs (elements) do
         if element ~= element2 then
-          physics.check_collision(element, element2)
+          _physics.check_collision(element, element2)
         end
       end
     end
   end
 end
 
-function physics.stay_inside(object)
+function _physics.stay_inside(object)
   screen_w, screen_h = love.graphics.getDimensions()
 
     --when object gets to left of screen
@@ -54,8 +54,8 @@ function physics.stay_inside(object)
   end
 end
 
-function physics.check_collision(object1, object2)
-  if physics.newrect_with_oldrect(object1, object2) then
+function _physics.check_collision(object1, object2)
+  if _physics.newrect_with_oldrect(object1, object2) then
     if object1.type == "player" and object2.death then
        object1:win()
     end
@@ -90,36 +90,36 @@ function physics.check_collision(object1, object2)
   end
 end
 
-function physics.run_physics(elements, dt)
+function _physics.run_physics(elements, dt)
   --rotate elements
-  if physics.rotation ~= 0 then
+  if _physics.rotation ~= 0 then
     local angle
     --define rotation
-    --[[if math.abs(physics.rotation) < 0.01 then
-      angle = physics.rotation
+    --[[if math.abs(_physics.rotation) < 0.01 then
+      angle = _physics.rotation
     else
-      angle = physics.rotation*0.04
+      angle = _physics.rotation*0.04
     end]]
 
     local limit = .03
-    if physics.rotation < 0 then
-      angle = math.max(physics.rotation, -limit)
+    if _physics.rotation < 0 then
+      angle = math.max(_physics.rotation, -limit)
     else
-      angle = math.min(physics.rotation, limit)
+      angle = math.min(_physics.rotation, limit)
     end
 
-    physics.rotation = physics.rotation - angle
+    _physics.rotation = _physics.rotation - angle
     for _, object in ipairs(elements) do
-      physics.rotate_element(object, angle)
+      _physics.rotate_element(object, angle)
     end
   end
 
-  if physics.rotation == 0 then
+  if _physics.rotation == 0 then
     for _, element in ipairs(elements) do
       element:update_new_pos(dt)
     end
 
-    physics.collision(elements)
+    _physics.collision(elements)
 
     for _, element in ipairs(elements) do
       element:update_pos()
@@ -127,31 +127,31 @@ function physics.run_physics(elements, dt)
   end
 
   for _, element in ipairs(elements) do
-    physics.stay_inside(element)
+    _physics.stay_inside(element)
   end
 end
 
-function physics.apply_gravity(element, dt)
-  local g = physics.get_gravity()
+function _physics.apply_gravity(element, dt)
+  local g = _physics.get_gravity()
   element.s_vector[2] = element.s_vector[2] + g * dt
 end
 
-function physics.get_gravity()
-  return physics.gravity
+function _physics.get_gravity()
+  return _physics.gravity
 end
 
-function physics.get_rotation()
-  return physics.rotation
+function _physics.get_rotation()
+  return _physics.rotation
 end
 
 --rotate all objects
-function physics.rotate(angle)
-  if physics.rotation == 0 then
-    physics.rotation = physics.rotation + angle
+function _physics.rotate(angle)
+  if _physics.rotation == 0 then
+    _physics.rotation = _physics.rotation + angle
   end
 end
 
-function physics.rotate_vector(vector, angle)
+function _physics.rotate_vector(vector, angle)
   local cos = math.cos(angle)
   local sin = math.sin(angle)
   local final_vector = {}
@@ -160,12 +160,12 @@ function physics.rotate_vector(vector, angle)
   return final_vector
 end
 
-function physics.rotate_element(object, angle)
+function _physics.rotate_element(object, angle)
   local v = {}
   v[1] = object.pos[1] - love.graphics.getWidth()/2
   v[2] = object.pos[2] - love.graphics.getHeight()/2
 
-  v = physics.rotate_vector(v, angle)
+  v = _physics.rotate_vector(v, angle)
 
   object.pos[1] = v[1] + love.graphics.getWidth()/2
   object.pos[2] = v[2] + love.graphics.getHeight()/2
@@ -175,4 +175,4 @@ function physics.rotate_element(object, angle)
   object.s_vector = {0, 0}
 end
 
-return physics
+return _physics

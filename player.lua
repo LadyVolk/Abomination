@@ -1,23 +1,23 @@
-local physics = require "physics"
+local Physics = require "physics"
 
-local function draw(self)
+local function _draw(self)
   love.graphics.setColor(1, 0, 1, 1)
 
   love.graphics.push()
   love.graphics.translate(self.pos[1], self.pos[2])
-  love.graphics.rotate(-physics.get_rotation())
+  love.graphics.rotate(-Physics.get_rotation())
   love.graphics.rectangle("fill", -self.width/2,
                           -self.height/2,
                           self.width, self.height)
   love.graphics.pop()
 end
 
-local function update_pos(self)
+local function _update_pos(self)
   self.pos[1] = self.new_pos[1]
   self.pos[2] = self.new_pos[2]
 end
 
-local function update_new_pos(self, dt)
+local function _update_new_pos(self, dt)
 
   if love.keyboard.isDown('a') and not love.keyboard.isDown('d') then
 
@@ -37,14 +37,14 @@ local function update_new_pos(self, dt)
   end
 
   --gravity
-  physics.apply_gravity(self, dt)
+  Physics.apply_gravity(self, dt)
 
   --change position
   self.new_pos[1] = self.pos[1] + self.s_vector[1] * dt
   self.new_pos[2] = self.pos[2] + self.s_vector[2] * dt
 end
 
-local function keypressed(self, key)
+local function _keypressed(self, key)
   screen_w, screen_h = love.graphics.getDimensions()
   if key == 'space' and not self.jumping then
     self.jumping = true
@@ -52,11 +52,11 @@ local function keypressed(self, key)
   end
 end
 
-local function win(self)
+local function _win(self)
   self.level:win()
 end
 
-local function create_player(pos, level)
+local function _create_player(pos, level)
   local player = {
     pos = pos,
     new_pos =  {pos[1], pos[2]},
@@ -79,13 +79,13 @@ local function create_player(pos, level)
     level = level,
 
     --functions
-    draw = draw,
-    update_pos = update_pos,
-    update_new_pos = update_new_pos,
-    keypressed = keypressed,
-    win = win,
+    draw = _draw,
+    update_pos = _update_pos,
+    update_new_pos = _update_new_pos,
+    keypressed = _keypressed,
+    win = _win,
   }
   return player
 end
 
-return create_player
+return _create_player
