@@ -18,7 +18,7 @@ local _level = {
     Block_create({460, 430}, 30, false, false),
 
     --fall block
-    Block_create({400, 430}, 30, true, false),
+    --Block_create({400, 430}, 30, true, false),
 
     --blocks below
     Block_create({430, 460}, 30, false, false),

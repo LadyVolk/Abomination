@@ -61,8 +61,8 @@ local function _create_player(pos, level)
     pos = pos,
     new_pos =  {pos[1], pos[2]},
 
-    width = 30,
-    height = 30,
+    width = 25,
+    height = 25,
 
     s_vector = {0, 0},
     max_speed = {300, 700},
