@@ -124,11 +124,11 @@ function _physics.run_physics(elements, dt)
     for _, element in ipairs(elements) do
       element:update_pos()
     end
+    for _, element in ipairs(elements) do
+      _physics.stay_inside(element)
+    end
   end
 
-  for _, element in ipairs(elements) do
-    _physics.stay_inside(element)
-  end
 end
 
 function _physics.apply_gravity(element, dt)
