@@ -14,6 +14,16 @@ local function _draw(self)
 
 end
 
+local function _mousepressed(self, x, y)
+
+  if self.pos[1] - self.size[1]/2 <= x
+     and self.pos[1] + self.size[1]/2 >= x
+     and self.pos[2] - self.size[2]/2 <= y
+     and self.pos[2] + self.size[2]/2 >= y then
+       self.func()
+  end
+end
+
 local function _create_button(size, color, text_color, text, pos, func)
   button = {
 
@@ -25,8 +35,10 @@ local function _create_button(size, color, text_color, text, pos, func)
     pos = pos,
     text_color = text_color,
 
+    mousepressed = _mousepressed,
     draw = _draw,
   }
   return button
 end
+
 return _create_button

@@ -35,4 +35,13 @@ end
 function _state:keypressed(key)
 end
 
+function _state:mousepressed(x, y, button, isTouch)
+  if button == 1 then
+    for _, element in ipairs(_elements) do
+      if element.type == "button" then
+        element:mousepressed(x, y)
+      end
+    end
+  end
+end
 return _state
