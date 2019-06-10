@@ -3,7 +3,6 @@ local _elements = {}
 local _state = {}
 
 function _state:enter(prev, lvl_num)
-  print(lvl_num)
   local w_w_c = love.graphics.getWidth()/2
   local w_h_c = love.graphics.getHeight()/2
 
@@ -12,7 +11,7 @@ function _state:enter(prev, lvl_num)
     Button({300, 60}, {1, 1, 0}, {0, 0, 0}, "Continue",
     {w_w_c, w_h_c - 50},
     function()
-      print("Continue")
+      GAMESTATE.switch(STATES.game, lvl_num)
     end),
 
     Button({300, 60}, {1, 1, 0}, {0, 0, 0}, "Quit Game",
