@@ -18,7 +18,7 @@ function _state:enter(prev, lvl_num)
     Button({300, 60}, {1, 1, 0}, {0, 0, 0}, "Quit Game",
     {w_w_c, w_h_c + 50},
     function()
-      print("Quit Game")
+      love.event.quit()
     end)
 
   }
