@@ -81,7 +81,7 @@ function _physics.check_collision(object1, object2)
     if math.abs(zy) < math.abs(zx) then
       if object1.s_vector[2] > 0 and object1.type == "player" then
         object1.jumping = false
-      end
+        end
       object1.s_vector[2] = 0
       object1.new_pos[2] = object1.new_pos[2] + zy
     else
@@ -145,9 +145,12 @@ function _physics.get_rotation()
 end
 
 --rotate all objects
-function _physics.rotate(angle)
+function _physics.rotate(angle, elements)
   if _physics.rotation == 0 then
     _physics.rotation = _physics.rotation + angle
+    for _, element in ipairs(elements) do
+      element.width, element.height = element.height, element.width
+    end
   end
 end
 

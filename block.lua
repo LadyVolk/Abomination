@@ -44,8 +44,8 @@ local function _create_block(pos, size, kinetic, death)
 
     kinetic = kinetic,
 
-    width = size,
-    height = size,
+    width = size[1],
+    height = size[2],
 
     --methods
     draw = _draw,

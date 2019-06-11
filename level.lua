@@ -22,9 +22,9 @@ local function _keypressed(self, key)
   if self.player then
     self.player:keypressed(key)
     if key == 'e' then
-      Physics.rotate(math.pi/2)
+      Physics.rotate(math.pi/2, self.elements)
     elseif key == 'q' then
-      Physics.rotate(-math.pi/2)
+      Physics.rotate(-math.pi/2, self.elements)
     end
   end
 end
