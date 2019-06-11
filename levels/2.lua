@@ -3,44 +3,22 @@ local _level = {
   blocks = {
     --blocks above
 
-    Block_create({45, 430}, 30, false, false),
-    Block_create({75, 430}, 30, false, false),
-    Block_create({105, 430}, 30, false, false),
-    Block_create({135, 430}, 30, false, false),
-    Block_create({165, 430}, 30, false, false),
-    Block_create({195, 430}, 30, false, false),
-    Block_create({225, 430}, 30, false, false),
+    Block_create({120, 430}, {240, 30}, false, false),
+
 
     --blocks to the left
-    Block_create({15, 430}, 30, false, false),
-    Block_create({15, 460}, 30, false, false),
-    Block_create({15, 490}, 30, false, false),
-    Block_create({15, 520}, 30, false, false),
-    Block_create({15, 550}, 30, false, false),
-    Block_create({15, 580}, 30, false, false),
-    Block_create({15, 610}, 30, false, false),
-    Block_create({15, 640}, 30, false, false),
+
+    Block_create({15, 535}, {30, 180}, false, false),
+
 
     --blocks below
-    Block_create({45, 640}, 30, false, false),
-    Block_create({75, 640}, 30, false, false),
-    Block_create({105, 640}, 30, false, false),
-    Block_create({135, 640}, 30, false, false),
-    Block_create({165, 640}, 30, false, false),
-    Block_create({195, 640}, 30, false, false),
-    Block_create({225, 640}, 30, false, false),
+    Block_create({120, 640}, {240, 30}, false, false),
+
 
 
     --reset line
-    Block_create({105, 535}, 30, false, false),
-    Block_create({135, 535}, 30, false, false),
-    Block_create({165, 535}, 30, false, false),
-    Block_create({195, 535}, 30, false, false),
-    Block_create({225, 535}, 30, false, false),
-    Block_create({255, 535}, 30, false, false),
-    Block_create({275, 535}, 30, false, false),
-    Block_create({305, 535}, 30, false, false),
-    Block_create({335, 535}, 30, false, false),
+    Block_create({550, 535}, {870, 30}, false, false),
+
 
   },
 
