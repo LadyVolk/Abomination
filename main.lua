@@ -13,5 +13,5 @@ end
 
 function love.load()
   setup()
-  GAMESTATE.switch(STATES.game, 2)
+  GAMESTATE.switch(STATES.game, 1)
 end

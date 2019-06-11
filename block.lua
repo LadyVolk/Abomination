@@ -35,25 +35,27 @@ local function _update_new_pos(block, dt)
   end
 end
 
-local function _create_block(pos, size, kinetic, death)
+local function _create_block(atbs)
   local block = {
 
     type = "block",
 
-    death = death,
+    death = atbs.death,
 
-    kinetic = kinetic,
+    restart = atbs.restart,
 
-    width = size[1],
-    height = size[2],
+    kinetic = atbs.kinetic,
+
+    width = atbs.size[1],
+    height = atbs.size[2],
 
     --methods
     draw = _draw,
     update_new_pos = _update_new_pos,
     update_pos = _update_pos,
 
-    pos = pos,
-    new_pos = {pos[1], pos[2]},
+    pos = atbs.pos,
+    new_pos = {atbs.pos[1], atbs.pos[2]},
     s_vector = {0, 0},
     max_speed = {0, 700}
   }

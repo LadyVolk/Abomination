@@ -2,22 +2,22 @@ local Block_create = require "block"
 local _level = {
   blocks = {
     --blocks above
-    Block_create({430, 400}, {90, 30}, false, false),
+    Block_create({pos = {430, 400}, size = {90, 30}}),
 
 
     --left of fall blocks
-    Block_create({340, 415}, {30, 60}, false, false),
+    Block_create({pos = {340, 415}, size = {30, 60}}),
 
     --right of fall block
-    Block_create({430, 430}, {30, 30}, false, true),
+    Block_create({pos = {430, 430}, size = {30, 30}, death = true}),
 
-    Block_create({460, 430}, {30, 30}, false, false),
+    Block_create({pos = {460, 430}, size = {30, 30}}),
 
     --fall block
-    Block_create({400, 430}, {30, 30}, true, false),
+    Block_create({pos = {400, 430}, size = {30, 30}, kinetic = true}),
 
     --blocks below
-    Block_create({400, 460}, {150, 30}, false, false),
+    Block_create({pos = {400, 460}, size = {150, 30}}),
 
   },
 

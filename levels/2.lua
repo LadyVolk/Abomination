@@ -3,21 +3,20 @@ local _level = {
   blocks = {
     --blocks above
 
-    Block_create({120, 430}, {240, 30}, false, false),
+    Block_create({pos = {120, 430}, size = {240, 30}}),
 
 
     --blocks to the left
 
-    Block_create({15, 535}, {30, 180}, false, false),
+    Block_create({pos = {15, 535}, size = {30, 180}}),
 
 
     --blocks below
-    Block_create({120, 640}, {240, 30}, false, false),
+    Block_create({ pos = {120, 640}, size = {240, 30}}),
 
 
-
-    --reset line
-    Block_create({550, 535}, {900, 30}, false, false),
+    --restart line
+    Block_create({pos = {550, 535}, size = {900, 30}, restart = true}),
 
 
   },
