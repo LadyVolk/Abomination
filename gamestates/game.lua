@@ -26,10 +26,10 @@ end
 function _state:mousepressed(x, y, button, isTouch)
   if button == 1 then
     table.insert(_level.elements,
-                 require "block" ({x, y}, 30, false, false))
+                 require "block" ({x, y}, {30, 30}, false, false))
   elseif button == 2 then
     table.insert(_level.elements,
-                 require "block" ({x, y}, 30, true, false))
+                 require "block" ({x, y}, {30, 30}, true, false))
   end
 end
 return _state
