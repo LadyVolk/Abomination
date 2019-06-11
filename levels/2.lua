@@ -17,7 +17,7 @@ local _level = {
 
 
     --reset line
-    Block_create({550, 535}, {870, 30}, false, false),
+    Block_create({550, 535}, {900, 30}, false, false),
 
 
   },
