@@ -1,4 +1,5 @@
 local Physics = require "physics"
+local Block = require "block"
 
 local function _draw(self)
   local s_w, s_h = love.graphics.getDimensions()
@@ -41,7 +42,6 @@ end
 
 local function _create_level(number)
   local level_data = require("levels."..number)
-
   local level = {
     number = number,
     elements = {},
@@ -59,7 +59,8 @@ local function _create_level(number)
 
   level.player = player
 
-  for _, bloco in ipairs(level_data.blocks) do
+  for _, bloco_data in ipairs(level_data.blocks) do
+    local bloco = Block(bloco_data)
     table.insert(level.elements, bloco)
   end
 

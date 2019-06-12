@@ -58,7 +58,7 @@ end
 
 local function _create_player(pos, level)
   local player = {
-    pos = pos,
+    pos = {pos[1], pos[2]},
     new_pos =  {pos[1], pos[2]},
 
     width = 25,

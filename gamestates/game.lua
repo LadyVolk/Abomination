@@ -4,7 +4,15 @@ local _level
 local _fps = 60
 function _state:enter(prev, lvl_num)
   _time = 0
-  _level = require "level" (lvl_num)
+  _state:restart_lvl(lvl_num)
+end
+
+function _state:restart_lvl(lvl_num)
+  if lvl_num then
+    _level = require "level" (lvl_num)
+  else
+    _level = require "level" (_level.number)
+  end
 end
 
 function _state:draw()

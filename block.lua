@@ -56,7 +56,7 @@ local function _create_block(atbs)
     update_new_pos = _update_new_pos,
     update_pos = _update_pos,
 
-    pos = atbs.pos,
+    pos = {atbs.pos[1], atbs.pos[2]},
     new_pos = {atbs.pos[1], atbs.pos[2]},
     s_vector = {0, 0},
     max_speed = {0, 700}
