@@ -21,7 +21,7 @@ local _level = {
 
   },
 
-  player_ipos = {600, 300},
+  player_ipos = {100, 400},
 
   next_lvl = 3,
 

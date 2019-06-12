@@ -3,6 +3,8 @@ local Physics = require "physics"
 local function _draw(block)
   if block.death then
     love.graphics.setColor(1, 1, 1, 1)
+  elseif block.restart then
+    love.graphics.setColor(0.5, 1, 1, 1)
   elseif not block.kinetic then
     love.graphics.setColor(1, 0.5, 0, 1)
   else
