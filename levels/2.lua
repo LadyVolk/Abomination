@@ -12,6 +12,9 @@ local _level = {
     --restart line
     {pos = {550, 535}, size = {900, 30}, restart = true},
 
+    --win block
+    {pos = {400, 840}, size = {30, 30}, death = true},
+
   },
 
   player_ipos = {100, 400},
