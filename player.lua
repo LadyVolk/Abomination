@@ -1,7 +1,7 @@
 local Physics = require "physics"
 
 local function _draw(self)
-  love.graphics.setColor(1, 0, 1, 1)
+  love.graphics.setColor(1, 0, 1, self.alpha)
 
   love.graphics.push()
   love.graphics.translate(self.pos[1], self.pos[2])
@@ -56,6 +56,14 @@ local function _win(self)
   self.level:win()
 end
 
+local function _update_alpha(player)
+  if player.invisible and player.show then
+    player.alpha = 1
+  elseif player.invisible then
+    player.alpha = 0
+  end
+end
+
 local function _create_player(pos, level)
   local player = {
     pos = {pos[1], pos[2]},
@@ -69,6 +77,7 @@ local function _create_player(pos, level)
     move_force = 400, --horizontal speed
     stop_force = 500,
     jump_force = 350,
+    alpha = 1,
 
     type = "player",
 
@@ -84,6 +93,7 @@ local function _create_player(pos, level)
     update_new_pos = _update_new_pos,
     keypressed = _keypressed,
     win = _win,
+    update_alpha = _update_alpha,
   }
   return player
 end

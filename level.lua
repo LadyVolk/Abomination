@@ -18,6 +18,7 @@ end
 local function _update(self, dt)
   self:set_invis(false)
   Physics.run_physics(self.elements, dt)
+  self:update_alpha()
 end
 
 local function _keypressed(self, key)
@@ -49,6 +50,12 @@ local function _set_invis(level, status)
   end
 end
 
+local function _update_alpha(self)
+  for _, element in ipairs(self.elements) do
+    element:update_alpha()
+  end
+end
+
 local function _create_level(number)
   local level_data = require("levels."..number)
   local level = {
@@ -63,6 +70,7 @@ local function _create_level(number)
     keypressed = _keypressed,
     win = _win,
     set_invis = _set_invis,
+    update_alpha = _update_alpha,
   }
 
   local player = require "player"(level_data.player_ipos, level)

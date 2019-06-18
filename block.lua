@@ -4,15 +4,15 @@ local function _draw(block)
 
   if not block.invisible or block.show then
     if block.death then
-      love.graphics.setColor(1, 1, 1, 1)
+      love.graphics.setColor(1, 1, 1, block.alpha)
     elseif block.restart then
-      love.graphics.setColor(1, 0, 0, 1)
+      love.graphics.setColor(1, 0, 0, block.alpha)
     elseif block.invis_button then
-      love.graphics.setColor(0, 1, 0, 1)
+      love.graphics.setColor(0, 1, 0, block.alpha)
     elseif block.kinetic then
-      love.graphics.setColor(0.5, 1, 1, 1)
+      love.graphics.setColor(0.5, 1, 1, block.alpha)
     else
-      love.graphics.setColor(1, 0.5, 0, 1)
+      love.graphics.setColor(1, 0.5, 0, block.alpha)
     end
 
     love.graphics.push()
@@ -43,6 +43,14 @@ local function _update_new_pos(block, dt)
   end
 end
 
+local function _update_alpha(block)
+  if block.invisible and block.show then
+    block.alpha = 1
+  elseif block.invisible then
+    block.alpha = 0
+  end
+end
+
 local function _create_block(atbs)
   local block = {
 
@@ -58,7 +66,9 @@ local function _create_block(atbs)
 
     invisible = atbs.invisible,
     show = false,
-    
+
+    alpha = atbs.invisible and 0 or 1,
+
     width = atbs.size[1],
     height = atbs.size[2],
 
@@ -66,6 +76,7 @@ local function _create_block(atbs)
     draw = _draw,
     update_new_pos = _update_new_pos,
     update_pos = _update_pos,
+    update_alpha = _update_alpha,
 
     pos = {atbs.pos[1], atbs.pos[2]},
     new_pos = {atbs.pos[1], atbs.pos[2]},
