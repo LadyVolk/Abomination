@@ -16,6 +16,7 @@ local function _draw(self)
 end
 
 local function _update(self, dt)
+  self:set_invis(false)
   Physics.run_physics(self.elements, dt)
 end
 
@@ -40,6 +41,14 @@ local function _win(level)
   GAMESTATE.switch(STATES.died, level.next_lvl)
 end
 
+local function _set_invis(level, status)
+  for _, element in ipairs(level.elements) do
+    if element.invisible then
+      element.show = status
+    end
+  end
+end
+
 local function _create_level(number)
   local level_data = require("levels."..number)
   local level = {
@@ -53,6 +62,7 @@ local function _create_level(number)
     update = _update,
     keypressed = _keypressed,
     win = _win,
+    set_invis = _set_invis,
   }
 
   local player = require "player"(level_data.player_ipos, level)

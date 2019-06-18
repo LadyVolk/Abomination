@@ -64,6 +64,11 @@ function _physics.check_collision(object1, object2)
         GAMESTATE.current():restart_lvl()
     end
 
+    if object2.invis_button then
+      GAMESTATE.current():show_invis()
+    end
+
+
     local zy
     --object1 below
     if object1.new_pos[2] > object2.pos[2] then

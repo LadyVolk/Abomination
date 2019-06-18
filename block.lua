@@ -2,7 +2,7 @@ local Physics = require "physics"
 
 local function _draw(block)
 
-  if not block.invisible then
+  if not block.invisible or block.show then
     if block.death then
       love.graphics.setColor(1, 1, 1, 1)
     elseif block.restart then
@@ -54,10 +54,11 @@ local function _create_block(atbs)
 
     kinetic = atbs.kinetic,
 
-    invisible = atbs.invisible,
-
     invis_button = atbs.invis_button,
 
+    invisible = atbs.invisible,
+    show = false,
+    
     width = atbs.size[1],
     height = atbs.size[2],
 

@@ -41,4 +41,9 @@ function _state:mousepressed(x, y, button, isTouch)
                                   kinetic = true} )
   end
 end
+
+function _state:show_invis()
+  _level:set_invis(true)
+end
+
 return _state
