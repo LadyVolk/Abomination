@@ -63,6 +63,7 @@ function _physics.check_collision(object1, object2)
     if object1.type == "player" and object2.restart then
         GAMESTATE.current():restart_lvl()
     end
+
     local zy
     --object1 below
     if object1.new_pos[2] > object2.pos[2] then

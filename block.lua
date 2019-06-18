@@ -1,22 +1,26 @@
 local Physics = require "physics"
 
 local function _draw(block)
-  if block.death then
-    love.graphics.setColor(1, 1, 1, 1)
-  elseif block.restart then
-    love.graphics.setColor(1, 0, 0, 1)
-  elseif not block.kinetic then
-    love.graphics.setColor(1, 0.5, 0, 1)
-  else
-    love.graphics.setColor(0.5, 1, 1, 1)
+
+  if not block.invisible then
+    if block.death then
+      love.graphics.setColor(1, 1, 1, 1)
+    elseif block.restart then
+      love.graphics.setColor(1, 0, 0, 1)
+    elseif not block.kinetic then
+      love.graphics.setColor(1, 0.5, 0, 1)
+    else
+      love.graphics.setColor(0.5, 1, 1, 1)
+    end
+
+    love.graphics.push()
+    love.graphics.translate(block.pos[1], block.pos[2])
+    love.graphics.rotate(-Physics.get_rotation())
+    love.graphics.rectangle("fill", -block.width/2,
+    -block.height/2,
+    block.width, block.height)
+    love.graphics.pop()
   end
-  love.graphics.push()
-  love.graphics.translate(block.pos[1], block.pos[2])
-  love.graphics.rotate(-Physics.get_rotation())
-  love.graphics.rectangle("fill", -block.width/2,
-                          -block.height/2,
-                          block.width, block.height)
-  love.graphics.pop()
 end
 
 local function _update_pos(block)
@@ -47,6 +51,8 @@ local function _create_block(atbs)
     restart = atbs.restart,
 
     kinetic = atbs.kinetic,
+
+    invisible = atbs.invisible,
 
     width = atbs.size[1],
     height = atbs.size[2],
