@@ -68,7 +68,7 @@ local function _create_player(pos, level)
     max_speed = {300, 700},
     move_force = 400, --horizontal speed
     stop_force = 500,
-    jump_force = 500,
+    jump_force = 350,
 
     type = "player",
 
