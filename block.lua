@@ -2,27 +2,26 @@ local Physics = require "physics"
 
 local function _draw(block)
 
-  if not block.invisible or block.show then
-    if block.death then
-      love.graphics.setColor(1, 1, 1, block.alpha)
-    elseif block.restart then
-      love.graphics.setColor(1, 0, 0, block.alpha)
-    elseif block.invis_button then
-      love.graphics.setColor(0, 1, 0, block.alpha)
-    elseif block.kinetic then
-      love.graphics.setColor(0.5, 1, 1, block.alpha)
-    else
-      love.graphics.setColor(1, 0.5, 0, block.alpha)
-    end
-
-    love.graphics.push()
-    love.graphics.translate(block.pos[1], block.pos[2])
-    love.graphics.rotate(-Physics.get_rotation())
-    love.graphics.rectangle("fill", -block.width/2,
-    -block.height/2,
-    block.width, block.height)
-    love.graphics.pop()
+  if block.death then
+    love.graphics.setColor(1, 1, 1, block.alpha)
+  elseif block.restart then
+    love.graphics.setColor(1, 0, 0, block.alpha)
+  elseif block.invis_button then
+    love.graphics.setColor(0, 1, 0, block.alpha)
+  elseif block.kinetic then
+    love.graphics.setColor(0.5, 1, 1, block.alpha)
+  else
+    love.graphics.setColor(1, 0.5, 0, block.alpha)
   end
+
+  love.graphics.push()
+  love.graphics.translate(block.pos[1], block.pos[2])
+  love.graphics.rotate(-Physics.get_rotation())
+  love.graphics.rectangle("fill", -block.width/2,
+  -block.height/2,
+  block.width, block.height)
+  love.graphics.pop()
+
 end
 
 local function _update_pos(block)
@@ -43,11 +42,11 @@ local function _update_new_pos(block, dt)
   end
 end
 
-local function _update_alpha(block)
+local function _update_alpha(block, dt)
   if block.invisible and block.show then
-    block.alpha = 1
+    block.alpha = math.min(block.alpha + block.fadein*dt, 1)
   elseif block.invisible then
-    block.alpha = 0
+    block.alpha = math.max(block.alpha - block.fadeout*dt, 0)
   end
 end
 
@@ -66,6 +65,9 @@ local function _create_block(atbs)
 
     invisible = atbs.invisible,
     show = false,
+
+    fadein = 1.5,
+    fadeout = 0.5,
 
     alpha = atbs.invisible and 0 or 1,
 
