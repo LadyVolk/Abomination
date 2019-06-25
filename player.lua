@@ -1,4 +1,5 @@
 local Physics = require "physics"
+local Indicator = require "player_indicator"
 
 local function _draw(self)
   love.graphics.setColor(1, 0, 1, self.alpha)
@@ -10,6 +11,14 @@ local function _draw(self)
                           -self.height/2,
                           self.width, self.height)
   love.graphics.pop()
+
+  if self.pos[1] < -self.width/2 or
+     self.pos[1] > love.graphics.getWidth()+self.width/2 or
+     self.pos[2] < -self.height/2 or
+     self.pos[2] > love.graphics.getHeight()+self.height/2
+  then
+    Indicator.draw(self.pos)
+  end
 end
 
 local function _update_pos(self)

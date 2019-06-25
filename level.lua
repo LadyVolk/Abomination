@@ -6,7 +6,6 @@ local function _draw(self)
 
   love.graphics.push()
 
-
   for _, element in ipairs(self.elements) do
     element:draw()
   end

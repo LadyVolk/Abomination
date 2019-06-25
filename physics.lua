@@ -187,4 +187,9 @@ function _physics.rotate_element(object, angle)
   object.s_vector = {0, 0}
 end
 
+function _physics.normalize_vector(vector)
+  local norm_v = math.sqrt(vector[1]*vector[1]+vector[2]*vector[2])
+  return {vector[1]/norm_v, vector[2]/norm_v}
+end
+
 return _physics
