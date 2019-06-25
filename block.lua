@@ -1,4 +1,5 @@
 local Physics = require "physics"
+local Indicator = require "player_indicator"
 
 local function _draw(block)
 
@@ -21,6 +22,15 @@ local function _draw(block)
   -block.height/2,
   block.width, block.height)
   love.graphics.pop()
+
+  if block.pos[1] < -block.width/2 or
+     block.pos[1] > love.graphics.getWidth()+block.width/2 or
+     block.pos[2] < -block.height/2 or
+     block.pos[2] > love.graphics.getHeight()+block.height/2
+  then
+    Indicator.draw(block.pos)
+  end
+
 
 end
 
