@@ -1,4 +1,5 @@
 GAMESTATE = require "ext_lib.gamestate"
+RES = require "ext_lib.res_manager"
 FONTS = {}
 
 STATES = {
@@ -8,6 +9,10 @@ STATES = {
 
 local function setup()
   GAMESTATE.registerEvents()
+
+  RES.init()
+  love.window.setMode(700, 700, {resizable = true})
+  RES.adjustWindow(700, 700)
   FONTS.default = love.graphics.newFont("Font/IndieFlower.ttf", 25)
 end
 
