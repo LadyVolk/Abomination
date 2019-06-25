@@ -26,7 +26,7 @@ function _physics.collision(elements)
 end
 
 function _physics.stay_inside(object)
-  screen_w, screen_h = love.graphics.getDimensions()
+  screen_w, screen_h = love.graphics.getWidth(), love.graphics.getHeight()
 
     --when object gets to left of screen
   if object.pos[1] - object.width/2 < 0 then
