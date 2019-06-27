@@ -23,7 +23,7 @@ local _level = {
 
   player_ipos = {500, 950},
 
-  next_lvl = 4,
+  next_lvl = "box",
 
 }
 return _level

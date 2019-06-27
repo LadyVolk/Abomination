@@ -21,7 +21,8 @@ local _level = {
 
   player_ipos = {100, 900},
 
-  next_lvl = 2,
+  next_lvl = "true_death",
+
 
 }
 return _level

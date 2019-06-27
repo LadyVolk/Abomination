@@ -12,7 +12,7 @@ local function _draw(block)
   elseif block.kinetic then
     love.graphics.setColor(0.5, 1, 1, block.alpha)
   else
-    love.graphics.setColor(1, 0.5, 0, block.alpha)
+    love.graphics.setColor(0.3, 0.3, 1, block.alpha)
   end
 
   love.graphics.push()

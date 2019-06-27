@@ -18,5 +18,5 @@ end
 
 function love.load()
   setup()
-  GAMESTATE.switch(STATES.game, 1)
+  GAMESTATE.switch(STATES.game, "turn")
 end
