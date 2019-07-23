@@ -4,7 +4,7 @@ local _elements = {}
 local _state = {}
 local _selected_block = nil
 local _find_block
-local _is_draging = false
+local _is_dragging = false
 
 function _state:enter()
 
@@ -23,7 +23,7 @@ function _state:keypressed(key)
 end
 
 function _state:mousemoved(x, y, dx, dy)
-  if _selected_block and _is_draging then
+  if _selected_block and _is_dragging then
     _selected_block.pos[1] = x
     _selected_block.pos[2] = y
   end
@@ -40,7 +40,7 @@ function _state:mousepressed(x, y, button, isTouch)
   elseif button == 1 then
     local block = _find_block(x, y)
     if block then
-      _is_draging = true
+      _is_dragging = true
       if block ~= _selected_block then
         block.selected = true
           if _selected_block then
@@ -60,7 +60,7 @@ end
 
 function _state:mousereleased(x, y, button, isTouch)
   if button == 1 then
-    _is_draging = false
+    _is_dragging = false
   end
 end
 
