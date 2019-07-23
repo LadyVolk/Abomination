@@ -2,7 +2,7 @@ local Block = require "block"
 local Physics = require "physics"
 local _elements = {}
 local _state = {}
-
+local _selected_block = nil
 local _find_block
 
 function _state:enter()
@@ -24,11 +24,20 @@ end
 function _state:mousepressed(x, y, button, isTouch)
   if button == 3 then
     table.insert(_elements, Block({size = {30, 30}, pos = {x, y}}))
-  end
-  if button == 2 then
+  elseif button == 2 then
     local block, i = _find_block(x, y)
     if block then
       table.remove(_elements, i)
+    end
+  elseif button == 1 then
+    if _selected_block then
+      _selected_block.selected = false
+      _selected_block = nil
+    end
+    local block = _find_block(x, y)
+    if block then
+      block.selected = true
+      _selected_block = block
     end
   end
 end

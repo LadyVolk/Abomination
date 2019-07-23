@@ -19,8 +19,15 @@ local function _draw(block)
   love.graphics.translate(block.pos[1], block.pos[2])
   love.graphics.rotate(-Physics.get_rotation())
   love.graphics.rectangle("fill", -block.width/2,
-  -block.height/2,
-  block.width, block.height)
+                          -block.height/2,
+                          block.width, block.height)
+  if block.selected then
+    love.graphics.setLineWidth(5)
+    love.graphics.setColor(1, 1, 1, 1)
+    love.graphics.rectangle("line", -block.width/2,
+                            -block.height/2,
+                            block.width, block.height)
+  end
   love.graphics.pop()
 
   if block.pos[1] < -block.width/2 or
@@ -74,6 +81,7 @@ local function _create_block(atbs)
     invis_button = atbs.invis_button,
 
     invisible = atbs.invisible,
+
     show = false,
 
     fadein = 1.5,
@@ -93,7 +101,12 @@ local function _create_block(atbs)
     pos = {atbs.pos[1], atbs.pos[2]},
     new_pos = {atbs.pos[1], atbs.pos[2]},
     s_vector = {0, 0},
-    max_speed = {0, 700}
+    max_speed = {0, 700},
+
+    --editor variables
+
+    selected = false,
+
   }
   return block
 end
