@@ -192,4 +192,15 @@ function _physics.normalize_vector(vector)
   return {vector[1]/norm_v, vector[2]/norm_v}
 end
 
+function _physics.collision_point_rect(point, rect)
+  if point.x < rect.pos[1]-rect.width/2 or
+     point.x > rect.pos[1]+rect.width/2 or
+     point.y < rect.pos[2]-rect.height/2 or
+     point.y > rect.pos[2]+rect.height/2 then
+       return false
+  else
+    return true
+  end
+end
+
 return _physics
