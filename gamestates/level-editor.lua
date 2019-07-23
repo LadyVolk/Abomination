@@ -21,6 +21,13 @@ end
 function _state:keypressed(key)
 end
 
+function _state:mousemoved(x, y, dx, dy)
+  if _selected_block and love.mouse.isDown(1) then
+    _selected_block.pos[1] = x
+    _selected_block.pos[2] = y
+  end
+end
+
 function _state:mousepressed(x, y, button, isTouch)
   if button == 3 then
     table.insert(_elements, Block({size = {30, 30}, pos = {x, y}}))
