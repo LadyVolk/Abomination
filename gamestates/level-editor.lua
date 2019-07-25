@@ -29,6 +29,9 @@ function _state:mousemoved(x, y, dx, dy)
     _selected_block.pos[2] = y
   end
   if _selected_block then
+    if Physics.collision_point_rect({x = x, y = y}, _selected_block) then
+      CURSOR.setcursor("dragging")
+    end
     local scale = 0.5
     local fixed_thickness = 10
     local upper_block = {
