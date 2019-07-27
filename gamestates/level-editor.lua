@@ -5,6 +5,10 @@ local _state = {}
 local _selected_block = nil
 local _find_block
 local _is_dragging = false
+local fixed_x
+local fixed_y
+local old_centerx
+local old_centery
 
 function _state:enter()
 
@@ -24,9 +28,15 @@ end
 
 function _state:mousemoved(x, y, dx, dy)
   CURSOR.setcursor("normal")
+
   if _selected_block and _is_dragging then
-    _selected_block.pos[1] = x
-    _selected_block.pos[2] = y
+
+    local dif_x = old_centerx - fixed_x
+    local dif_y = old_centery - fixed_y
+
+    _selected_block.pos[1] = dif_x + x
+    _selected_block.pos[2] = dif_y + y
+
   end
   if _selected_block then
     if Physics.collision_point_rect({x = x, y = y}, _selected_block) then
@@ -79,11 +89,17 @@ function _state:mousepressed(x, y, button, isTouch)
   elseif button == 1 then
     local block = _find_block(x, y)
     if block then
+      fixed_x = x
+      fixed_y = y
+      old_centerx = block.pos[1]
+      old_centery = block.pos[2]
       _is_dragging = true
       if block ~= _selected_block then
         block.selected = true
           if _selected_block then
           _selected_block.selected = false
+          old_centerx = 0
+          old_centery = 0
           _selected_block = nil
         end
         _selected_block = block
@@ -100,6 +116,10 @@ end
 function _state:mousereleased(x, y, button, isTouch)
   if button == 1 then
     _is_dragging = false
+    fixed_x = 0
+    fixed_y = 0
+    old_centerx = 0
+    old_centery = 0
   end
 end
 
