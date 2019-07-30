@@ -17,7 +17,6 @@ local function setup()
   RES.adjustWindow(700, 700)
   FONTS.default = love.graphics.newFont("Font/IndieFlower.ttf", 25)
   CURSOR.setup()
-  CURSOR.setcursor("dragging")
 end
 
 function love.load()
