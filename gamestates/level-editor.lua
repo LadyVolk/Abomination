@@ -8,6 +8,7 @@ local _is_resizing = false
 local _find_block
 local _d_x
 local _d_y
+local _MIN_SIZE = 30
 
 
 function _state:enter()
@@ -32,22 +33,22 @@ function _state:mousemoved(x, y, dx, dy)
   if _selected_block and _is_resizing then
     if _is_resizing == "upper" then
       local d_y = (_selected_block.pos[2] - _selected_block.height/2) - y
-      d_y = math.max(d_y, 30 - _selected_block.height)
+      d_y = math.max(d_y, _MIN_SIZE - _selected_block.height)
       _selected_block.height = _selected_block.height + d_y
       _selected_block.pos[2] = _selected_block.pos[2] - d_y/2
     elseif _is_resizing == "lower" then
       local d_y = (_selected_block.pos[2] + _selected_block.height/2) - y
-      d_y = math.min(d_y, _selected_block.height - 30)
+      d_y = math.min(d_y, _selected_block.height - _MIN_SIZE)
       _selected_block.height = _selected_block.height - d_y
       _selected_block.pos[2] = _selected_block.pos[2] - d_y/2
     elseif _is_resizing == "right" then
       local d_x = (_selected_block.pos[1] + _selected_block.width/2) - x
-      d_x = math.min(d_x, _selected_block.width - 30)
+      d_x = math.min(d_x, _selected_block.width - _MIN_SIZE)
       _selected_block.width = _selected_block.width - d_x
       _selected_block.pos[1] = _selected_block.pos[1] - d_x/2
     elseif _is_resizing == "left" then
       local d_x = (_selected_block.pos[1] - _selected_block.width/2) - x
-      d_x = math.max(d_x, 30 - _selected_block.width)
+      d_x = math.max(d_x, _MIN_SIZE - _selected_block.width)
       _selected_block.width = _selected_block.width + d_x
       _selected_block.pos[1] = _selected_block.pos[1] - d_x/2
     end
