@@ -29,47 +29,21 @@ function _state:mousemoved(x, y, dx, dy)
   CURSOR.setcursor("normal")
 
   if _selected_block and _is_dragging then
-
     _selected_block.pos[1] = _d_x + x
     _selected_block.pos[2] = _d_y + y
-
-  end
-  if _selected_block then
-    if Physics.collision_point_rect({x = x, y = y}, _selected_block) then
+  elseif _selected_block then
+    local p = {x = x, y = y}
+    if Physics.collision_point_rect(p, _selected_block) then
       CURSOR.setcursor("dragging")
     end
-    local scale = 0.5
-    local fixed_thickness = 10
-    local upper_block = {
-        pos = {_selected_block.pos[1],
-               _selected_block.pos[2]-_selected_block.height/2},
-        width = _selected_block.width*scale,
-        height = fixed_thickness,
-      }
-      local lower_block = {
-        pos = {_selected_block.pos[1],
-               _selected_block.pos[2]+_selected_block.height/2},
-        width = _selected_block.width*scale,
-        height = fixed_thickness,
-      }
-      local right_block = {
-        pos = {_selected_block.pos[1]-_selected_block.width/2,
-               _selected_block.pos[2]},
-        width = fixed_thickness,
-        height = _selected_block.height*scale,
-      }
-      local left_block = {
-        pos = {_selected_block.pos[1]+_selected_block.width/2,
-               _selected_block.pos[2]},
-        width = fixed_thickness,
-        height = _selected_block.height*scale,
 
-      }
-    if Physics.collision_point_rect({x = x, y = y}, upper_block) or
-       Physics.collision_point_rect({x = x, y = y}, lower_block) then
+    if
+      Physics.collision_point_rect(p, _selected_block:get_resize_region("upper")) or
+      Physics.collision_point_rect(p, _selected_block:get_resize_region("lower")) then
          CURSOR.setcursor("resize_v")
-    elseif Physics.collision_point_rect({x = x, y = y}, right_block) or
-           Physics.collision_point_rect({x = x, y = y}, left_block) then
+    elseif
+      Physics.collision_point_rect(p, _selected_block:get_resize_region("right")) or
+      Physics.collision_point_rect(p, _selected_block:get_resize_region("left")) then
         CURSOR.setcursor("resize_h")
     end
   end

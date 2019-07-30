@@ -1,6 +1,42 @@
 local Physics = require "physics"
 local Indicator = require "player_indicator"
 
+local function _get_resize_region(self, region)
+  local scale = 0.5
+  local fixed_thickness = 10
+  if region == "upper" then
+    return {
+        pos = {self.pos[1],
+               self.pos[2]-self.height/2},
+        width = self.width*scale,
+        height = fixed_thickness,
+        }
+  elseif region == "lower" then
+    return {
+      pos = {self.pos[1],
+             self.pos[2]+self.height/2},
+      width = self.width*scale,
+      height = fixed_thickness,
+      }
+  elseif region == "right" then
+    return {
+    pos =  {self.pos[1]+self.width/2,
+           self.pos[2]},
+    width = fixed_thickness,
+    height = self.height*scale,
+    }
+  elseif region == "left" then
+    return {
+      pos = {self.pos[1]-self.width/2,
+             self.pos[2]},
+      width = fixed_thickness,
+      height = self.height*scale,
+      }
+  else
+    error("there is no such resize region: "..region)
+  end
+end
+
 local function _draw(block)
 
   if block.death then
@@ -97,6 +133,7 @@ local function _create_block(atbs)
     update_new_pos = _update_new_pos,
     update_pos = _update_pos,
     update_alpha = _update_alpha,
+    get_resize_region = _get_resize_region,
 
     pos = {atbs.pos[1], atbs.pos[2]},
     new_pos = {atbs.pos[1], atbs.pos[2]},
@@ -104,7 +141,7 @@ local function _create_block(atbs)
     max_speed = {0, 700},
 
     --editor variables
-    
+
     selected = false,
 
   }
