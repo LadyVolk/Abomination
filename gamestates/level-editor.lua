@@ -66,10 +66,11 @@ function _state:mousemoved(x, y, dx, dy)
 
       }
     if Physics.collision_point_rect({x = x, y = y}, upper_block) or
-       Physics.collision_point_rect({x = x, y = y}, lower_block) or
-       Physics.collision_point_rect({x = x, y = y}, right_block) or
-       Physics.collision_point_rect({x = x, y = y}, left_block) then
-      CURSOR.setcursor("resize")
+       Physics.collision_point_rect({x = x, y = y}, lower_block) then
+         CURSOR.setcursor("resize_v")
+    elseif Physics.collision_point_rect({x = x, y = y}, right_block) or
+           Physics.collision_point_rect({x = x, y = y}, left_block) then
+        CURSOR.setcursor("resize_h")
     end
   end
 end
@@ -77,31 +78,34 @@ end
 function _state:mousepressed(x, y, button, isTouch)
   if button == 3 then
     table.insert(_elements, Block({size = {100, 100}, pos = {x, y}}))
+
   elseif button == 2 then
     local block, i = _find_block(x, y)
     if block then
       table.remove(_elements, i)
     end
+
   elseif button == 1 then
-    local block = _find_block(x, y)
-    if block then
-      _d_x = block.pos[1] - x
-      _d_y = block.pos[2] - y
+    if CURSOR.getcursor() == "dragging" then
+      _d_x = _selected_block.pos[1] - x
+      _d_y = _selected_block.pos[2] - y
       _is_dragging = true
-      if block ~= _selected_block then
-        block.selected = true
+    else
+      local block = _find_block(x, y)
+      if block then
           if _selected_block then
+            _selected_block.selected = false
+          end
+          block.selected = true
+          _selected_block = block
+      else
+        if _selected_block then
           _selected_block.selected = false
           _selected_block = nil
         end
-        _selected_block = block
-      end
-    else
-      if _selected_block then
-        _selected_block.selected = false
-        _selected_block = nil
       end
     end
+
   end
 end
 
