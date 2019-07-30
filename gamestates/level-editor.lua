@@ -3,8 +3,9 @@ local Physics = require "physics"
 local _elements = {}
 local _state = {}
 local _selected_block = nil
-local _find_block
 local _is_dragging = false
+local _is_resizing = false
+local _find_block
 local _d_x
 local _d_y
 
@@ -28,6 +29,30 @@ end
 function _state:mousemoved(x, y, dx, dy)
   CURSOR.setcursor("normal")
 
+  if _selected_block and _is_resizing then
+    if _is_resizing == "upper" then
+      local d_y = (_selected_block.pos[2] - _selected_block.height/2) - y
+      d_y = math.max(d_y, 30 - _selected_block.height)
+      _selected_block.height = _selected_block.height + d_y
+      _selected_block.pos[2] = _selected_block.pos[2] - d_y/2
+    elseif _is_resizing == "lower" then
+      local d_y = (_selected_block.pos[2] + _selected_block.height/2) - y
+      d_y = math.min(d_y, _selected_block.height - 30)
+      _selected_block.height = _selected_block.height - d_y
+      _selected_block.pos[2] = _selected_block.pos[2] - d_y/2
+    elseif _is_resizing == "right" then
+      local d_x = (_selected_block.pos[1] + _selected_block.width/2) - x
+      d_x = math.min(d_x, _selected_block.width - 30)
+      _selected_block.width = _selected_block.width - d_x
+      _selected_block.pos[1] = _selected_block.pos[1] - d_x/2
+    elseif _is_resizing == "left" then
+      local d_x = (_selected_block.pos[1] - _selected_block.width/2) - x
+      d_x = math.max(d_x, 30 - _selected_block.width)
+      _selected_block.width = _selected_block.width + d_x
+      _selected_block.pos[1] = _selected_block.pos[1] - d_x/2
+    end
+  end
+
   if _selected_block and _is_dragging then
     _selected_block.pos[1] = _d_x + x
     _selected_block.pos[2] = _d_y + y
@@ -37,14 +62,14 @@ function _state:mousemoved(x, y, dx, dy)
       CURSOR.setcursor("dragging")
     end
 
-    if
-      Physics.collision_point_rect(p, _selected_block:get_resize_region("upper")) or
-      Physics.collision_point_rect(p, _selected_block:get_resize_region("lower")) then
-         CURSOR.setcursor("resize_v")
-    elseif
-      Physics.collision_point_rect(p, _selected_block:get_resize_region("right")) or
-      Physics.collision_point_rect(p, _selected_block:get_resize_region("left")) then
-        CURSOR.setcursor("resize_h")
+    if Physics.collision_point_rect(p, _selected_block:get_resize_region("upper")) then
+       CURSOR.setcursor("resize_upper")
+    elseif Physics.collision_point_rect(p, _selected_block:get_resize_region("lower")) then
+           CURSOR.setcursor("resize_lower")
+    elseif Physics.collision_point_rect(p, _selected_block:get_resize_region("right")) then
+           CURSOR.setcursor("resize_right")
+    elseif Physics.collision_point_rect(p, _selected_block:get_resize_region("left")) then
+           CURSOR.setcursor("resize_left")
     end
   end
 end
@@ -64,6 +89,14 @@ function _state:mousepressed(x, y, button, isTouch)
       _d_x = _selected_block.pos[1] - x
       _d_y = _selected_block.pos[2] - y
       _is_dragging = true
+    elseif CURSOR.getcursor() == "resize_upper" then
+      _is_resizing = "upper"
+    elseif CURSOR.getcursor() == "resize_lower" then
+      _is_resizing = "lower"
+    elseif CURSOR.getcursor() == "resize_right" then
+      _is_resizing = "right"
+    elseif CURSOR.getcursor() == "resize_left" then
+      _is_resizing = "left"
     else
       local block = _find_block(x, y)
       if block then
@@ -86,6 +119,7 @@ end
 function _state:mousereleased(x, y, button, isTouch)
   if button == 1 then
     _is_dragging = false
+    _is_resizing = false
   end
 end
 

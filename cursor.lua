@@ -5,8 +5,10 @@ local _type_cursor
 function _funcs.setup()
   _cursors.normal = love.mouse.getSystemCursor("arrow")
   _cursors.dragging = love.mouse.getSystemCursor("sizeall")
-  _cursors.resize_h = love.mouse.getSystemCursor("sizewe")
-  _cursors.resize_v = love.mouse.getSystemCursor("sizens")
+  _cursors.resize_upper = love.mouse.getSystemCursor("sizens")
+  _cursors.resize_lower = love.mouse.getSystemCursor("sizens")
+  _cursors.resize_right = love.mouse.getSystemCursor("sizewe")
+  _cursors.resize_left = love.mouse.getSystemCursor("sizewe")
   _funcs.setcursor("normal")
 end
 
