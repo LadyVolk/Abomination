@@ -117,22 +117,23 @@ function _state:mousepressed(x, y, button, isTouch)
     elseif CURSOR.getcursor() == "resize_left" then
       _is_resizing = "left"
       _d_x = (_selected_block.pos[1] - _selected_block.width/2) - x
+
     elseif CURSOR.getcursor() == "resize_upper_left" then
       _is_resizing = "upper_left"
-      _d_x = 0
-      _d_y = 0
+      _d_x = (_selected_block.pos[1] - _selected_block.width/2) - x
+      _d_y = (_selected_block.pos[2] - _selected_block.height/2) - y
     elseif CURSOR.getcursor() == "resize_upper_right" then
       _is_resizing = "upper_right"
-      _d_x = 0
-      _d_y = 0
+      _d_x = (_selected_block.pos[1] + _selected_block.width/2) - x
+      _d_y = (_selected_block.pos[2] - _selected_block.height/2) - y
     elseif CURSOR.getcursor() == "resize_lower_left" then
       _is_resizing = "lower_left"
-      _d_x = 0
-      _d_y = 0
+      _d_x = (_selected_block.pos[1] - _selected_block.width/2) - x
+      _d_y = (_selected_block.pos[2] + _selected_block.height/2) - y
     elseif CURSOR.getcursor() == "resize_lower_right" then
       _is_resizing = "lower_right"
-      _d_x = 0
-      _d_y = 0
+      _d_x = (_selected_block.pos[1] + _selected_block.width/2) - x
+      _d_y = (_selected_block.pos[2] + _selected_block.height/2) - y
     else
       local block = _find_block(x, y)
       if block then
