@@ -30,6 +30,7 @@ function _state:draw()
 end
 
 function _state:update(dt)
+  _bar:update(dt)
 end
 
 function _state:keypressed(key)
@@ -159,6 +160,7 @@ function _state:mousepressed(x, y, button, isTouch)
     end
 
   end
+  _bar:mousepressed(x, y, button)
 end
 
 function _state:mousereleased(x, y, button, isTouch)
