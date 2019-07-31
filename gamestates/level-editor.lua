@@ -5,11 +5,11 @@ local _state = {}
 local _selected_block = nil
 local _is_dragging = false
 local _is_resizing = false
-local _find_block
 local _d_x
 local _d_y
 local _MIN_SIZE = 30
-
+--declaration of local functions
+local _find_block
 
 function _state:enter()
 
@@ -17,9 +17,16 @@ end
 
 function _state:draw()
   for _, element in ipairs(_elements) do
-    element:draw()
+    if element ~= _selected_block then
+      element:draw()
+    end
+  end
+  if _selected_block then
+    _selected_block:draw()
   end
 end
+
+
 
 function _state:update(dt)
 end
@@ -159,7 +166,7 @@ function _state:mousereleased(x, y, button, isTouch)
     _is_resizing = false
   end
 end
-
+--local functions
 function _find_block(x, y)
   for i, element in ipairs(_elements) do
     if Physics.collision_point_rect({x = x, y = y}, element) then
@@ -167,4 +174,5 @@ function _find_block(x, y)
     end
   end
 end
+
 return _state
