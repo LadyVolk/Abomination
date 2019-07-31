@@ -9,6 +9,10 @@ function _funcs.setup()
   _cursors.resize_lower = love.mouse.getSystemCursor("sizens")
   _cursors.resize_right = love.mouse.getSystemCursor("sizewe")
   _cursors.resize_left = love.mouse.getSystemCursor("sizewe")
+  _cursors.resize_upper_right = love.mouse.getSystemCursor("sizenesw")
+  _cursors.resize_lower_left = love.mouse.getSystemCursor("sizenesw")
+  _cursors.resize_upper_left = love.mouse.getSystemCursor("sizenwse")
+  _cursors.resize_lower_right = love.mouse.getSystemCursor("sizenwse")
   _funcs.setcursor("normal")
 end
 

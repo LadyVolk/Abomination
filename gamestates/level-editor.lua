@@ -31,22 +31,29 @@ function _state:mousemoved(x, y, dx, dy)
   CURSOR.setcursor("normal")
 
   if _selected_block and _is_resizing then
-    if _is_resizing == "upper" then
+    if _is_resizing == "upper" or _is_resizing == "upper_left" or
+       _is_resizing == "upper_right" then
       local d_y = (_selected_block.pos[2] - _selected_block.height/2) - y - _d_y
       d_y = math.max(d_y, _MIN_SIZE - _selected_block.height)
       _selected_block.height = _selected_block.height + d_y
       _selected_block.pos[2] = _selected_block.pos[2] - d_y/2
-    elseif _is_resizing == "lower" then
+    end
+    if _is_resizing == "lower" or _is_resizing == "lower_right" or
+       _is_resizing == "lower_left" then
       local d_y = (_selected_block.pos[2] + _selected_block.height/2) - y - _d_y
       d_y = math.min(d_y, _selected_block.height - _MIN_SIZE)
       _selected_block.height = _selected_block.height - d_y
       _selected_block.pos[2] = _selected_block.pos[2] - d_y/2
-    elseif _is_resizing == "right" then
+    end
+    if _is_resizing == "right" or _is_resizing == "upper_right" or
+       _is_resizing == "lower_right" then
       local d_x = (_selected_block.pos[1] + _selected_block.width/2) - x - _d_x
       d_x = math.min(d_x, _selected_block.width - _MIN_SIZE)
       _selected_block.width = _selected_block.width - d_x
       _selected_block.pos[1] = _selected_block.pos[1] - d_x/2
-    elseif _is_resizing == "left" then
+    end
+    if _is_resizing == "left" or _is_resizing == "upper_left" or
+       _is_resizing == "lower_left" then
       local d_x = (_selected_block.pos[1] - _selected_block.width/2) - x - _d_x
       d_x = math.max(d_x, _MIN_SIZE - _selected_block.width)
       _selected_block.width = _selected_block.width + d_x
@@ -71,6 +78,14 @@ function _state:mousemoved(x, y, dx, dy)
            CURSOR.setcursor("resize_right")
     elseif Physics.collision_point_rect(p, _selected_block:get_resize_region("left")) then
            CURSOR.setcursor("resize_left")
+    elseif Physics.collision_point_rect(p, _selected_block:get_resize_region("upper_right")) then
+           CURSOR.setcursor("resize_upper_right")
+    elseif Physics.collision_point_rect(p, _selected_block:get_resize_region("upper_left")) then
+           CURSOR.setcursor("resize_upper_left")
+    elseif Physics.collision_point_rect(p, _selected_block:get_resize_region("lower_right")) then
+           CURSOR.setcursor("resize_lower_right")
+    elseif Physics.collision_point_rect(p, _selected_block:get_resize_region("lower_left")) then
+           CURSOR.setcursor("resize_lower_left")
     end
   end
 end
@@ -102,6 +117,22 @@ function _state:mousepressed(x, y, button, isTouch)
     elseif CURSOR.getcursor() == "resize_left" then
       _is_resizing = "left"
       _d_x = (_selected_block.pos[1] - _selected_block.width/2) - x
+    elseif CURSOR.getcursor() == "resize_upper_left" then
+      _is_resizing = "upper_left"
+      _d_x = 0
+      _d_y = 0
+    elseif CURSOR.getcursor() == "resize_upper_right" then
+      _is_resizing = "upper_right"
+      _d_x = 0
+      _d_y = 0
+    elseif CURSOR.getcursor() == "resize_lower_left" then
+      _is_resizing = "lower_left"
+      _d_x = 0
+      _d_y = 0
+    elseif CURSOR.getcursor() == "resize_lower_right" then
+      _is_resizing = "lower_right"
+      _d_x = 0
+      _d_y = 0
     else
       local block = _find_block(x, y)
       if block then

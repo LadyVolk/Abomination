@@ -32,6 +32,36 @@ local function _get_resize_region(self, region)
       width = fixed_thickness,
       height = self.height*scale,
       }
+  elseif region == "upper_right" then
+    return {
+      pos = {self.pos[1]+self.width/2,
+             self.pos[2]-self.height/2},
+      width = fixed_thickness,
+      height = fixed_thickness,
+    }
+  elseif region == "lower_left" then
+    return {
+      pos = {self.pos[1]-self.width/2,
+             self.pos[2]+self.height/2},
+      width = fixed_thickness,
+      height = fixed_thickness,
+    }
+  elseif region == "upper_left" then
+    return {
+      pos = {self.pos[1]-self.width/2,
+             self.pos[2]-self.height/2},
+      width = fixed_thickness,
+      height = fixed_thickness,
+    }
+  elseif region == "lower_right" then
+    return {
+      pos = {self.pos[1]+self.width/2,
+             self.pos[2]+self.height/2},
+      width = fixed_thickness,
+      height = fixed_thickness,
+    }
+
+
   else
     error("there is no such resize region: "..region)
   end
