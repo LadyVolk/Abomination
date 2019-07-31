@@ -1,5 +1,6 @@
 local Block = require "block"
 local Physics = require "physics"
+local Bar = require "properties_bar"
 local _elements = {}
 local _state = {}
 local _selected_block = nil
@@ -8,11 +9,12 @@ local _is_resizing = false
 local _d_x
 local _d_y
 local _MIN_SIZE = 30
+local _bar
 --declaration of local functions
 local _find_block
 
 function _state:enter()
-
+  _bar = Bar()
 end
 
 function _state:draw()
@@ -24,9 +26,8 @@ function _state:draw()
   if _selected_block then
     _selected_block:draw()
   end
+  _bar:draw()
 end
-
-
 
 function _state:update(dt)
 end
