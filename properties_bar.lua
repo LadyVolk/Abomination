@@ -47,10 +47,11 @@ function _draw(self)
 end
 
 function _update(self, dt)
+  local speed = 400
   if self.retracted then
-    self.bar_x = -self.width
+    self.bar_x = math.max(self.bar_x-speed * dt, -self.width)
   else
-    self.bar_x = 0
+    self.bar_x = math.min(self.bar_x+speed * dt, 0)
   end
 end
 
