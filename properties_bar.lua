@@ -38,9 +38,12 @@ function _draw(self)
                           button.pos[2] - button.height/2,
                           button.width, button.height)
   --draw options
+  love.graphics.push()
+  love.graphics.translate(self.bar_x, 0)
   for _, toggle in ipairs(self.toggles) do
     toggle:draw()
   end
+  love.graphics.pop()
 end
 
 function _update(self, dt)
