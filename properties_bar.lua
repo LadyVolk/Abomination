@@ -61,8 +61,10 @@ function _mousepressed(self, x, y, button)
       button == 1 then
     self.retracted = not self.retracted
   end
-  for _, property in ipairs(self.toggles) do
-    property:mousepressed(x, y, button)
+  if not self.retracted then
+    for _, property in ipairs(self.toggles) do
+      property:mousepressed(x, y, button)
+    end
   end
 end
 
