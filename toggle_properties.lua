@@ -3,6 +3,7 @@ local _draw
 local _update
 local _mousepressed
 local _get_button
+local Physics = require "physics"
 
 function _create_options(_property, x, y)
   local options = {
@@ -23,7 +24,7 @@ end
 
 function _draw(self)
   --toggle button
-  local type = active and "fill" or "line"
+  local type = self.active and "fill" or "line"
   local button = self:get_button()
   love.graphics.setColor(1, 0.5, 0, 1)
   love.graphics.setLineWidth(10)
@@ -45,6 +46,13 @@ function _get_button(self)
     width = w,
     height = h,
   }
+end
+
+function _mousepressed(self, x, y, button)
+  if button == 1 and Physics.collision_point_rect({x = x, y = y},
+                                self:get_button()) then
+    self.active = not self.active
+  end
 end
 
 return _create_options
