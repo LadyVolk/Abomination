@@ -4,6 +4,7 @@ local _update
 local _mousepressed
 local _get_button_tab
 local Physics = require "physics"
+local Toggle = require "toggle_properties"
 
 function _create_bar()
   local bar = {
@@ -16,15 +17,19 @@ function _create_bar()
 
     bar_x = 0,
 
-    width = 100,
+    width = 200,
     height = love.graphics.getHeight(),
 
+    toggles = {Toggle("kinetic", 30, 150),
+               Toggle("button", 30, 350),
+               Toggle("restart", 30, 550),
+               Toggle("invisible", 30, 750)}
   }
   return bar
 end
 
 function _draw(self)
-  love.graphics.setColor(1, 1, 1, 0.5)
+  love.graphics.setColor(1, 1, 1, 1)
   love.graphics.rectangle("fill", self.bar_x, 0, self.width, self.height)
   --button for activation of bar
   love.graphics.setColor(1, 0.5, 1, 1)
@@ -32,6 +37,10 @@ function _draw(self)
   love.graphics.rectangle("fill", button.pos[1] - button.width/2,
                           button.pos[2] - button.height/2,
                           button.width, button.height)
+  --draw options
+  for _, toggle in ipairs(self.toggles) do
+    toggle:draw()
+  end
 end
 
 function _update(self, dt)

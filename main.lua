@@ -15,7 +15,8 @@ local function setup()
   RES.init()
   love.window.setMode(700, 700, {resizable = true})
   RES.adjustWindow(700, 700)
-  FONTS.default = love.graphics.newFont("Font/IndieFlower.ttf", 25)
+  FONTS.default = love.graphics.newFont("Font/IndieFlower.ttf", 30)
+  FONTS.large = love.graphics.newFont("Font/IndieFlower.ttf", 35)
   CURSOR.setup()
 end
 
