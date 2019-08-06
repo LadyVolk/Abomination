@@ -107,6 +107,10 @@ function _state:mousepressed(x, y, button, isTouch)
     local block, i = _find_block(x, y)
     if block then
       table.remove(_elements, i)
+      if _selected_block == block then
+        _selected_block = nil
+        CURSOR.setcursor("normal")
+      end
     end
 
   elseif button == 1 then
