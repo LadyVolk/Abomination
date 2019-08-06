@@ -71,6 +71,7 @@ function _state:mousemoved(x, y, dx, dy)
   end
 
   if _selected_block and _is_dragging then
+    CURSOR.setcursor("dragging")
     _selected_block.pos[1] = _d_x + x
     _selected_block.pos[2] = _d_y + y
   elseif _selected_block then

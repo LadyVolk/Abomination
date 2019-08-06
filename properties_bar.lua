@@ -37,7 +37,6 @@ function _update(self, dt)
 end
 
 function _mousepressed(self, x, y, button)
-  print (button)
   if button == 3 then
     self.retracted = not self.retracted
   end
