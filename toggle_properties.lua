@@ -5,7 +5,7 @@ local _mousepressed
 local _get_button
 local Physics = require "physics"
 
-function _create_options(_property, x, y)
+function _create_options(_property, x, y, _bar)
   local options = {
     draw = _draw,
     update = _update,
@@ -16,7 +16,9 @@ function _create_options(_property, x, y)
 
     property = _property,
 
-    pos = {x, y}
+    pos = {x, y},
+
+    bar = _bar,
 
   }
   return options

@@ -3,6 +3,7 @@ local _draw
 local _update
 local _mousepressed
 local _get_button_tab
+local _set_obj
 local Physics = require "physics"
 local Toggle = require "toggle_properties"
 
@@ -12,19 +13,27 @@ function _create_bar()
     update = _update,
     mousepressed = _mousepressed,
     get_button_tab = _get_button_tab,
+    set_obj = _set_obj,
 
     retracted = false,
+
+    selected_obj = nil,
 
     bar_x = 0,
 
     width = 200,
     height = love.graphics.getHeight(),
 
-    toggles = {Toggle("kinetic", 30, 150),
-               Toggle("button", 30, 350),
-               Toggle("restart", 30, 550),
-               Toggle("invisible", 30, 750)}
+    toggles = {},
+
   }
+
+  table.insert(bar.toggles, Toggle("kinetic", 30, 150, bar))
+  table.insert(bar.toggles, Toggle("button", 30, 350, bar))
+  table.insert(bar.toggles, Toggle("restart", 30, 550, bar))
+  table.insert(bar.toggles, Toggle("invisible", 30, 750, bar))
+
+
   return bar
 end
 
@@ -74,6 +83,10 @@ function _get_button_tab(self)
     width = self.width/3,
     height = self.width/3,
   }
+end
+
+function _set_obj(self, block)
+  selected_obj = block
 end
 
 return _create_bar

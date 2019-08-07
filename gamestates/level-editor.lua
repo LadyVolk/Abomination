@@ -110,6 +110,7 @@ function _state:mousepressed(x, y, button, isTouch)
       table.remove(_elements, i)
       if _selected_block == block then
         _selected_block = nil
+        _bar:set_obj(nil)
         CURSOR.setcursor("normal")
       end
     end
@@ -156,10 +157,12 @@ function _state:mousepressed(x, y, button, isTouch)
           end
           block.selected = true
           _selected_block = block
+          _bar:set_obj(block)
       else
         if _selected_block then
           _selected_block.selected = false
           _selected_block = nil
+          _bar:set_obj(nil)
         end
       end
     end
