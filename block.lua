@@ -73,7 +73,7 @@ local function _draw(block)
     love.graphics.setColor(1, 1, 1, block.alpha)
   elseif block.restart then
     love.graphics.setColor(1, 0, 0, block.alpha)
-  elseif block.invis_button then
+  elseif block.invis_b then
     love.graphics.setColor(0, 1, 0, block.alpha)
   elseif block.kinetic then
     love.graphics.setColor(0.5, 1, 1, block.alpha)
@@ -144,7 +144,7 @@ local function _create_block(atbs)
 
     kinetic = atbs.kinetic,
 
-    invis_button = atbs.invis_button,
+    invis_b = atbs.invis_b,
 
     invisible = atbs.invisible,
 

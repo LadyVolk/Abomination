@@ -2,10 +2,10 @@ local _level = {
   blocks = {
 
     --block button
-    {pos = {500, 240}, size = {30, 10}, invis_button = true},
+    {pos = {500, 240}, size = {30, 10}, invis_b = true},
 
     --block button inner
-    {pos = {680, 640}, size = {30, 10}, invis_button = true},
+    {pos = {680, 640}, size = {30, 10}, invis_b = true},
 
     --death block
     {pos = {585, 500}, size = {90, 60}, death = true},

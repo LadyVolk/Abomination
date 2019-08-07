@@ -14,7 +14,7 @@ local _level = {
     {pos = {485, 515}, size = {30, 30}, invisible = true},
 
     --block button
-    {pos = {485, 995}, size = {30, 10}, invis_button = true},
+    {pos = {485, 995}, size = {30, 10}, invis_b = true},
 
   },
 

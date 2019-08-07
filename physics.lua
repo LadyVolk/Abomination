@@ -64,7 +64,7 @@ function _physics.check_collision(object1, object2)
         GAMESTATE.current():restart_lvl()
     end
 
-    if object2.invis_button then
+    if object2.invis_b then
       GAMESTATE.current():show_invis()
     end
 

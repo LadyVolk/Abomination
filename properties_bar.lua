@@ -30,10 +30,11 @@ function _create_bar()
 
   }
 
-  table.insert(bar.toggles, Toggle("kinetic", 30, 150, bar))
-  table.insert(bar.toggles, Toggle("button", 30, 350, bar))
-  table.insert(bar.toggles, Toggle("restart", 30, 550, bar))
-  table.insert(bar.toggles, Toggle("invisible", 30, 750, bar))
+  table.insert(bar.toggles, Toggle("kinetic", 30, 100, bar))
+  table.insert(bar.toggles, Toggle("invis_b", 30, 300, bar))
+  table.insert(bar.toggles, Toggle("restart", 30, 500, bar))
+  table.insert(bar.toggles, Toggle("invisible", 30, 700, bar))
+  table.insert(bar.toggles, Toggle("death", 30, 900, bar))
 
 
   return bar
@@ -49,12 +50,14 @@ function _draw(self)
                           button.pos[2] - button.height/2,
                           button.width, button.height)
   --draw options
-  love.graphics.push()
-  love.graphics.translate(self.bar_x, 0)
-  for _, toggle in ipairs(self.toggles) do
-    toggle:draw()
+  if self.selected_obj then
+    love.graphics.push()
+    love.graphics.translate(self.bar_x, 0)
+    for _, toggle in ipairs(self.toggles) do
+      toggle:draw()
+    end
+    love.graphics.pop()
   end
-  love.graphics.pop()
 end
 
 function _update(self, dt)
@@ -72,7 +75,7 @@ function _mousepressed(self, x, y, button)
       button == 1 then
     self.retracted = not self.retracted
   end
-  if not self.retracted then
+  if not self.retracted and self.selected_obj then
     for _, property in ipairs(self.toggles) do
       property:mousepressed(x, y, button)
     end
