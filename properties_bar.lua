@@ -4,6 +4,7 @@ local _update
 local _mousepressed
 local _get_button_tab
 local _set_obj
+local _get_rect
 local Physics = require "physics"
 local Toggle = require "toggle_properties"
 
@@ -14,6 +15,7 @@ function _create_bar()
     mousepressed = _mousepressed,
     get_button_tab = _get_button_tab,
     set_obj = _set_obj,
+    get_rect = _get_rect,
 
     retracted = false,
 
@@ -86,7 +88,13 @@ function _get_button_tab(self)
 end
 
 function _set_obj(self, block)
-  selected_obj = block
+  self.selected_obj = block
+end
+
+function _get_rect(self)
+  return {pos = {self.bar_x + self.width/2, self.height/2},
+          width = self.width,
+          height = self.height}
 end
 
 return _create_bar

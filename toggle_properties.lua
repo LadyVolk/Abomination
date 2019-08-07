@@ -54,6 +54,7 @@ function _mousepressed(self, x, y, button)
   if button == 1 and Physics.collision_point_rect({x = x, y = y},
                                 self:get_button()) then
     self.active = not self.active
+    self.bar.selected_obj[self.property] = self.active
   end
 end
 

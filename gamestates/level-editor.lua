@@ -116,59 +116,61 @@ function _state:mousepressed(x, y, button, isTouch)
     end
 
   elseif button == 1 then
-    if CURSOR.getcursor() == "dragging" then
-      _d_x = _selected_block.pos[1] - x
-      _d_y = _selected_block.pos[2] - y
-      _is_dragging = true
-    elseif CURSOR.getcursor() == "resize_upper" then
-      _is_resizing = "upper"
-      _d_y = (_selected_block.pos[2] - _selected_block.height/2) - y
-    elseif CURSOR.getcursor() == "resize_lower" then
-      _is_resizing = "lower"
-      _d_y = (_selected_block.pos[2] + _selected_block.height/2) - y
-    elseif CURSOR.getcursor() == "resize_right" then
-      _is_resizing = "right"
-      _d_x = (_selected_block.pos[1] + _selected_block.width/2) - x
-    elseif CURSOR.getcursor() == "resize_left" then
-      _is_resizing = "left"
-      _d_x = (_selected_block.pos[1] - _selected_block.width/2) - x
+    if not Physics.collision_point_rect({x = x, y = y}, _bar:get_rect()) then
+      if CURSOR.getcursor() == "dragging" then
+        _d_x = _selected_block.pos[1] - x
+        _d_y = _selected_block.pos[2] - y
+        _is_dragging = true
+      elseif CURSOR.getcursor() == "resize_upper" then
+        _is_resizing = "upper"
+        _d_y = (_selected_block.pos[2] - _selected_block.height/2) - y
+      elseif CURSOR.getcursor() == "resize_lower" then
+        _is_resizing = "lower"
+        _d_y = (_selected_block.pos[2] + _selected_block.height/2) - y
+      elseif CURSOR.getcursor() == "resize_right" then
+        _is_resizing = "right"
+        _d_x = (_selected_block.pos[1] + _selected_block.width/2) - x
+      elseif CURSOR.getcursor() == "resize_left" then
+        _is_resizing = "left"
+        _d_x = (_selected_block.pos[1] - _selected_block.width/2) - x
 
-    elseif CURSOR.getcursor() == "resize_upper_left" then
-      _is_resizing = "upper_left"
-      _d_x = (_selected_block.pos[1] - _selected_block.width/2) - x
-      _d_y = (_selected_block.pos[2] - _selected_block.height/2) - y
-    elseif CURSOR.getcursor() == "resize_upper_right" then
-      _is_resizing = "upper_right"
-      _d_x = (_selected_block.pos[1] + _selected_block.width/2) - x
-      _d_y = (_selected_block.pos[2] - _selected_block.height/2) - y
-    elseif CURSOR.getcursor() == "resize_lower_left" then
-      _is_resizing = "lower_left"
-      _d_x = (_selected_block.pos[1] - _selected_block.width/2) - x
-      _d_y = (_selected_block.pos[2] + _selected_block.height/2) - y
-    elseif CURSOR.getcursor() == "resize_lower_right" then
-      _is_resizing = "lower_right"
-      _d_x = (_selected_block.pos[1] + _selected_block.width/2) - x
-      _d_y = (_selected_block.pos[2] + _selected_block.height/2) - y
-    else
-      local block = _find_block(x, y)
-      if block then
+      elseif CURSOR.getcursor() == "resize_upper_left" then
+        _is_resizing = "upper_left"
+        _d_x = (_selected_block.pos[1] - _selected_block.width/2) - x
+        _d_y = (_selected_block.pos[2] - _selected_block.height/2) - y
+      elseif CURSOR.getcursor() == "resize_upper_right" then
+        _is_resizing = "upper_right"
+        _d_x = (_selected_block.pos[1] + _selected_block.width/2) - x
+        _d_y = (_selected_block.pos[2] - _selected_block.height/2) - y
+      elseif CURSOR.getcursor() == "resize_lower_left" then
+        _is_resizing = "lower_left"
+        _d_x = (_selected_block.pos[1] - _selected_block.width/2) - x
+        _d_y = (_selected_block.pos[2] + _selected_block.height/2) - y
+      elseif CURSOR.getcursor() == "resize_lower_right" then
+        _is_resizing = "lower_right"
+        _d_x = (_selected_block.pos[1] + _selected_block.width/2) - x
+        _d_y = (_selected_block.pos[2] + _selected_block.height/2) - y
+      else
+        local block = _find_block(x, y)
+        if block then
+            if _selected_block then
+              _selected_block.selected = false
+            end
+            block.selected = true
+            _selected_block = block
+            _bar:set_obj(block)
+        else
           if _selected_block then
             _selected_block.selected = false
+            _selected_block = nil
+            _bar:set_obj(nil)
           end
-          block.selected = true
-          _selected_block = block
-          _bar:set_obj(block)
-      else
-        if _selected_block then
-          _selected_block.selected = false
-          _selected_block = nil
-          _bar:set_obj(nil)
         end
       end
+    else
+      _bar:mousepressed(x, y, button)
     end
-
   end
-  _bar:mousepressed(x, y, button)
 end
 
 function _state:mousereleased(x, y, button, isTouch)
