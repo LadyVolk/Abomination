@@ -77,6 +77,8 @@ local function _draw(block)
     love.graphics.setColor(0, 1, 0, block.alpha)
   elseif block.kinetic then
     love.graphics.setColor(0.5, 1, 1, block.alpha)
+  elseif block.edit_mode and block.invisible then
+    love.graphics.setColor(1, 1, 1, block.alpha/2)
   else
     love.graphics.setColor(0.3, 0.3, 1, block.alpha)
   end
@@ -173,6 +175,7 @@ local function _create_block(atbs)
     --editor variables
 
     selected = false,
+    edit_mode = atbs.edit_mode,
 
   }
   return block

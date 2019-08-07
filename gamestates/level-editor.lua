@@ -102,7 +102,8 @@ end
 
 function _state:mousepressed(x, y, button, isTouch)
   if button == 3 then
-    table.insert(_elements, Block({size = {100, 100}, pos = {x, y}}))
+    table.insert(_elements, Block({size = {100, 100}, pos = {x, y},
+                 edit_mode = true}))
 
   elseif button == 2 then
     local block, i = _find_block(x, y)
