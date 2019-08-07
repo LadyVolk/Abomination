@@ -92,6 +92,12 @@ end
 
 function _set_obj(self, block)
   self.selected_obj = block
+  --syncing the toggles options with selected object
+  if self.selected_obj then
+    for _, toggle in ipairs(self.toggles) do
+        toggle.active = self.selected_obj[toggle.property]
+    end
+  end
 end
 
 function _get_rect(self)
