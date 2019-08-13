@@ -117,7 +117,8 @@ function _state:mousepressed(x, y, button, isTouch)
     end
 
   elseif button == 1 then
-    if not Physics.collision_point_rect({x = x, y = y}, _bar:get_rect()) then
+    if not Physics.collision_point_rect({x = x, y = y}, _bar:get_rect()) and
+       not Physics.collision_point_rect({x = x, y = y}, _bar:get_button_tab())  then
       if CURSOR.getcursor() == "dragging" then
         _d_x = _selected_block.pos[1] - x
         _d_y = _selected_block.pos[2] - y
