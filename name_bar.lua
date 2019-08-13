@@ -74,6 +74,11 @@ function _mousepressed(self, x, y, button)
       button == 1 then
     self.retracted = not self.retracted
   end
+  if not self.retracted then
+    for _, box in ipairs(self.text_boxes) do
+      box:mousepressed(x, y, button)
+    end
+  end
 end
 
 function _update(self, dt)
