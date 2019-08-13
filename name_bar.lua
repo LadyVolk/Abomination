@@ -5,6 +5,7 @@ local _get_button
 local _update
 local _get_rect
 local Physics = require "physics"
+local Text = require "text_box"
 
 function _create_name_bar()
   local w = 200
@@ -23,8 +24,12 @@ function _create_name_bar()
     width = w,
     height = 100,
 
+
   }
 
+  bar.text_boxes = {Text(bar.bar_x + bar.width/2,
+                        love.graphics.getHeight()-3*bar.height/4,
+                  bar.width-10, bar.height/2-10)}
 
   return bar
 end
@@ -40,6 +45,9 @@ function _draw(self)
                           button.pos[2]-button.height/2,
                           button.width, button.height)
 
+  for _, box in ipairs(self.text_boxes) do
+    box:draw()
+  end
 end
 
 function _get_button_tab(self)
