@@ -45,9 +45,14 @@ function _draw(self)
                           button.pos[2]-button.height/2,
                           button.width, button.height)
 
+  --draw box
+  love.graphics.push()
+  love.graphics.translate(self.bar_x - (love.graphics.getWidth() - self.width), 0)
   for _, box in ipairs(self.text_boxes) do
     box:draw()
   end
+  love.graphics.pop()
+
 end
 
 function _get_button_tab(self)
