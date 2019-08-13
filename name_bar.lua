@@ -27,10 +27,10 @@ function _create_name_bar()
 
   }
 
-  bar.text_boxes = {Text(bar.bar_x + bar.width/2,
+  bar.text_boxes = {Text("level_name", bar.bar_x + bar.width/2,
                         love.graphics.getHeight()-3*bar.height/4,
                   bar.width-10, bar.height/2-10),
-                    Text(bar.bar_x + bar.width/2,
+                    Text("next_level", bar.bar_x + bar.width/2,
                         love.graphics.getHeight()-bar.height/4,
                   bar.width-10, bar.height/2-10)}
 

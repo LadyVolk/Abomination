@@ -17,6 +17,7 @@ local function setup()
   RES.adjustWindow(700, 700)
   FONTS.default = love.graphics.newFont("Font/IndieFlower.ttf", 30)
   FONTS.large = love.graphics.newFont("Font/IndieFlower.ttf", 35)
+  FONTS.text_box = love.graphics.newFont("Font/IndieFlower.ttf", 30)
   CURSOR.setup()
 end
 
