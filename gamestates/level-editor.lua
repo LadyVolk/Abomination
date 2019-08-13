@@ -35,6 +35,7 @@ end
 
 function _state:update(dt)
   _bar:update(dt)
+  _name_bar:update(dt)
 end
 
 function _state:keypressed(key)
@@ -121,8 +122,14 @@ function _state:mousepressed(x, y, button, isTouch)
     end
 
   elseif button == 1 then
-    if not Physics.collision_point_rect({x = x, y = y}, _bar:get_rect()) and
-       not Physics.collision_point_rect({x = x, y = y}, _bar:get_button_tab())  then
+    local point = {x = x, y = y}
+    if Physics.collision_point_rect(point, _bar:get_rect()) or
+       Physics.collision_point_rect(point, _bar:get_button_tab())  then
+         _bar:mousepressed(x, y, button)
+    elseif Physics.collision_point_rect(point, _name_bar:get_rect()) or
+           Physics.collision_point_rect(point, _name_bar:get_button_tab()) then
+      _name_bar:mousepressed(x, y, button)
+    else
       if CURSOR.getcursor() == "dragging" then
         _d_x = _selected_block.pos[1] - x
         _d_y = _selected_block.pos[2] - y
@@ -159,12 +166,12 @@ function _state:mousepressed(x, y, button, isTouch)
       else
         local block = _find_block(x, y)
         if block then
-            if _selected_block then
-              _selected_block.selected = false
-            end
-            block.selected = true
-            _selected_block = block
-            _bar:set_obj(block)
+          if _selected_block then
+            _selected_block.selected = false
+          end
+          block.selected = true
+          _selected_block = block
+          _bar:set_obj(block)
         else
           if _selected_block then
             _selected_block.selected = false
@@ -173,8 +180,7 @@ function _state:mousepressed(x, y, button, isTouch)
           end
         end
       end
-    else
-      _bar:mousepressed(x, y, button)
+
     end
   end
 end

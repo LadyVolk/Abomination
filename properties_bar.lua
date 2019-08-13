@@ -61,7 +61,7 @@ function _draw(self)
 end
 
 function _update(self, dt)
-  local speed = 400
+  local speed = 500
   if self.retracted then
     self.bar_x = math.max(self.bar_x-speed * dt, -self.width)
   else
@@ -71,7 +71,8 @@ end
 
 function _mousepressed(self, x, y, button)
   --checking for retractable bar
-  if  Physics.collision_point_rect({x = x, y = y}, self:get_button_tab()) and
+  if  Physics.collision_point_rect({x = x, y = y},
+    	self:get_button_tab()) and
       button == 1 then
     self.retracted = not self.retracted
   end
