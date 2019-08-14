@@ -93,23 +93,24 @@ function _state:mousemoved(x, y, dx, dy)
     if Physics.collision_point_rect(p, _selected_block) then
       CURSOR.setcursor("dragging")
     end
-
-    if Physics.collision_point_rect(p, _selected_block:get_resize_region("upper")) then
-       CURSOR.setcursor("resize_upper")
-    elseif Physics.collision_point_rect(p, _selected_block:get_resize_region("lower")) then
-           CURSOR.setcursor("resize_lower")
-    elseif Physics.collision_point_rect(p, _selected_block:get_resize_region("right")) then
-           CURSOR.setcursor("resize_right")
-    elseif Physics.collision_point_rect(p, _selected_block:get_resize_region("left")) then
-           CURSOR.setcursor("resize_left")
-    elseif Physics.collision_point_rect(p, _selected_block:get_resize_region("upper_right")) then
-           CURSOR.setcursor("resize_upper_right")
-    elseif Physics.collision_point_rect(p, _selected_block:get_resize_region("upper_left")) then
-           CURSOR.setcursor("resize_upper_left")
-    elseif Physics.collision_point_rect(p, _selected_block:get_resize_region("lower_right")) then
-           CURSOR.setcursor("resize_lower_right")
-    elseif Physics.collision_point_rect(p, _selected_block:get_resize_region("lower_left")) then
-           CURSOR.setcursor("resize_lower_left")
+    if _selected_block ~= _player_start_pos then
+      if Physics.collision_point_rect(p, _selected_block:get_resize_region("upper")) then
+         CURSOR.setcursor("resize_upper")
+      elseif Physics.collision_point_rect(p, _selected_block:get_resize_region("lower")) then
+             CURSOR.setcursor("resize_lower")
+      elseif Physics.collision_point_rect(p, _selected_block:get_resize_region("right")) then
+             CURSOR.setcursor("resize_right")
+      elseif Physics.collision_point_rect(p, _selected_block:get_resize_region("left")) then
+             CURSOR.setcursor("resize_left")
+      elseif Physics.collision_point_rect(p, _selected_block:get_resize_region("upper_right")) then
+             CURSOR.setcursor("resize_upper_right")
+      elseif Physics.collision_point_rect(p, _selected_block:get_resize_region("upper_left")) then
+             CURSOR.setcursor("resize_upper_left")
+      elseif Physics.collision_point_rect(p, _selected_block:get_resize_region("lower_right")) then
+             CURSOR.setcursor("resize_lower_right")
+      elseif Physics.collision_point_rect(p, _selected_block:get_resize_region("lower_left")) then
+             CURSOR.setcursor("resize_lower_left")
+      end
     end
   end
 end
@@ -182,7 +183,9 @@ function _state:mousepressed(x, y, button, isTouch)
           end
           block.selected = true
           _selected_block = block
-          _bar:set_obj(block)
+          if _selected_block ~= _player_start_pos then
+            _bar:set_obj(block)
+          end
         else
           if _selected_block then
             _selected_block.selected = false
@@ -204,6 +207,9 @@ function _state:mousereleased(x, y, button, isTouch)
 end
 --local functions
 function _find_block(x, y)
+  if Physics.collision_point_rect({x = x, y = y}, _player_start_pos) then
+    return _player_start_pos, -1
+  end
   for i, element in ipairs(_elements) do
     if Physics.collision_point_rect({x = x, y = y}, element) then
       return element, i
