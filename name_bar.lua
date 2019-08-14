@@ -7,6 +7,7 @@ local _get_rect
 local _unselect_text_boxes
 local _text_input
 local _keypressed
+local _get_level_name
 local Physics = require "physics"
 local Text = require "text_box"
 
@@ -22,6 +23,7 @@ function _create_name_bar()
     unselect_text_boxes = _unselect_text_boxes,
     text_input = _text_input,
     keypressed = _keypressed,
+    get_level_name = _get_level_name,
 
     retracted = false,
 
@@ -122,6 +124,10 @@ function _keypressed(self, key)
   for _, box in ipairs(self.text_boxes) do
     box:keypressed(key)
   end
+end
+
+function _get_level_name(self)
+  return self.text_boxes[1].text
 end
 
 return _create_name_bar

@@ -44,6 +44,9 @@ end
 
 function _state:keypressed(key)
   _name_bar:keypressed(key)
+  if key == "f6" then
+    self:save()
+  end
 end
 
 function _state:textinput(text)
@@ -214,6 +217,16 @@ function _find_block(x, y)
     if Physics.collision_point_rect({x = x, y = y}, element) then
       return element, i
     end
+  end
+end
+
+function _state:save()
+  local level_name = _name_bar:get_level_name()..".lua"
+  local success, message = love.filesystem.write(level_name, "dkjhasdk")
+  if success then
+    print("level saved: "..level_name)
+  else
+    print("error: ", message)
   end
 end
 
