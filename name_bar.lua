@@ -4,6 +4,7 @@ local _mousepressed
 local _get_button
 local _update
 local _get_rect
+local _unselect_text_boxes
 local Physics = require "physics"
 local Text = require "text_box"
 
@@ -16,6 +17,7 @@ function _create_name_bar()
     get_rect = _get_rect,
     update = _update,
     get_rect = _get_rect,
+    unselect_text_boxes = _unselect_text_boxes,
 
     retracted = false,
 
@@ -69,14 +71,17 @@ end
 
 function _mousepressed(self, x, y, button)
   --checking for retractable bar
+  if not self.retracted then
+    for _, box in ipairs(self.text_boxes) do
+      box:mousepressed(x, y, button)
+    end
+  end
   if  Physics.collision_point_rect({x = x, y = y},
     	self:get_button_tab()) and
       button == 1 then
     self.retracted = not self.retracted
-  end
-  if not self.retracted then
-    for _, box in ipairs(self.text_boxes) do
-      box:mousepressed(x, y, button)
+    if not self.selected then
+      self:unselect_text_boxes()
     end
   end
 end
@@ -95,6 +100,12 @@ function _get_rect(self)
                 love.graphics.getHeight()-self.height/2},
           width = self.width,
           height = self.height}
+end
+
+function _unselect_text_boxes(self)
+  for _, box in ipairs(self.text_boxes) do
+    box.selected = false
+  end
 end
 
 return _create_name_bar

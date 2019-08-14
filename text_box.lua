@@ -50,5 +50,4 @@ function _mousepressed(self, x, y, button)
   end
 end
 
-
 return _create_name_box
