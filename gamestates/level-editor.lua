@@ -2,6 +2,7 @@ local Block = require "block"
 local Physics = require "physics"
 local Bar = require "properties_bar"
 local NameBar = require "name_bar"
+local Player = require "player_start_pos"
 local _elements = {}
 local _state = {}
 local _selected_block = nil
@@ -12,12 +13,14 @@ local _d_y
 local _MIN_SIZE = 30
 local _bar
 local _name_bar
+local _player_start_pos
 --declaration of local functions
 local _find_block
 
 function _state:enter()
   _bar = Bar()
   _name_bar = NameBar()
+  _player_start_pos = Player()
 end
 
 function _state:draw()
@@ -29,6 +32,7 @@ function _state:draw()
   if _selected_block then
     _selected_block:draw()
   end
+  _player_start_pos:draw()
   _bar:draw()
   _name_bar:draw()
 end
