@@ -222,7 +222,12 @@ end
 
 function _state:save()
   local level_name = _name_bar:get_level_name()..".lua"
-  local success, message = love.filesystem.write(level_name, "dkjhasdk")
+  local data =[[
+  local _level = {
+    blocks = {
+  ]]
+
+  local success, message = love.filesystem.write(level_name, data)
   if success then
     print("level saved: "..level_name)
   else
