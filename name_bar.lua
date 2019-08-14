@@ -8,6 +8,7 @@ local _unselect_text_boxes
 local _text_input
 local _keypressed
 local _get_level_name
+local _get_next_lvl
 local Physics = require "physics"
 local Text = require "text_box"
 
@@ -24,6 +25,7 @@ function _create_name_bar()
     text_input = _text_input,
     keypressed = _keypressed,
     get_level_name = _get_level_name,
+    get_next_lvl = _get_next_lvl,
 
     retracted = false,
 
@@ -128,6 +130,10 @@ end
 
 function _get_level_name(self)
   return self.text_boxes[1].text
+end
+
+function _get_next_lvl(self)
+  return self.text_boxes[2].text
 end
 
 return _create_name_bar

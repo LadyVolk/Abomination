@@ -226,6 +226,45 @@ function _state:save()
   local _level = {
     blocks = {
   ]]
+  for _, element in ipairs(_elements) do
+    local text = "{pos = {"..element.pos[1]..", "..element.pos[2].."}, "
+    text = text .."size = {"..element.width..", "..element.height.."}"
+    if element.kinect then
+      text = text ..", kinect = true"
+    end
+    if element.death then
+      text = text ..", death = true"
+    end
+    if element.restart then
+      text = text ..", restart = true"
+    end
+    if element.invisible then
+      text = text ..", invisible = true"
+    end
+    if element.invis_b then
+      text = text ..", invis_b = true"
+    end
+    text = text .."},"
+
+    data = data .."   "..text..[[
+
+  ]]
+  end
+  data = data ..[[  },
+
+  ]]
+  local player_pos = "  player_ipos = {".._player_start_pos.pos[1]..", "
+                      .._player_start_pos.pos[2].."},"
+  data = data ..player_pos..[[
+
+  ]]
+  data = data .."  next_lvl = ".._name_bar:get_next_lvl()..[[
+
+  }
+  return _level
+  ]]
+
+
 
   local success, message = love.filesystem.write(level_name, data)
   if success then
