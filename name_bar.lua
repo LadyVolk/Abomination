@@ -5,6 +5,8 @@ local _get_button
 local _update
 local _get_rect
 local _unselect_text_boxes
+local _text_input
+local _keypressed
 local Physics = require "physics"
 local Text = require "text_box"
 
@@ -18,6 +20,8 @@ function _create_name_bar()
     update = _update,
     get_rect = _get_rect,
     unselect_text_boxes = _unselect_text_boxes,
+    text_input = _text_input,
+    keypressed = _keypressed,
 
     retracted = false,
 
@@ -105,6 +109,18 @@ end
 function _unselect_text_boxes(self)
   for _, box in ipairs(self.text_boxes) do
     box.selected = false
+  end
+end
+
+function _text_input(self, text)
+  for _, box in ipairs(self.text_boxes) do
+    box:text_input(text)
+  end
+end
+
+function _keypressed(self, key)
+  for _, box in ipairs(self.text_boxes) do
+    box:keypressed(key)
   end
 end
 

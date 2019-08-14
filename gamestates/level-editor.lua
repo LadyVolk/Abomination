@@ -39,6 +39,11 @@ function _state:update(dt)
 end
 
 function _state:keypressed(key)
+  _name_bar:keypressed(key)
+end
+
+function _state:textinput(text)
+  _name_bar:text_input(text)
 end
 
 function _state:mousemoved(x, y, dx, dy)

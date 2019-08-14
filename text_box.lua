@@ -2,6 +2,8 @@ local _create_text_box
 local _draw
 local _texts
 local _mousepressed
+local _text_input
+local _keypressed
 local Physics = require "physics"
 
 function _create_name_box(type, x, y, width, height)
@@ -12,7 +14,11 @@ function _create_name_box(type, x, y, width, height)
 
     draw = _draw,
 
+    text_input = _text_input,
+
     mousepressed = _mousepressed,
+
+    keypressed = _keypressed,
 
     type = type,
 
@@ -47,6 +53,20 @@ function _mousepressed(self, x, y, button)
     self.selected = true
   else
     self.selected = false
+  end
+end
+
+function _text_input(self, text)
+  if self.selected then
+    self.text = self.text..text
+  end
+end
+
+function _keypressed(self, key)
+  if self.selected then
+    if key == "backspace" then
+      self.text = string.sub(self.text, 1, -2)
+    end
   end
 end
 
