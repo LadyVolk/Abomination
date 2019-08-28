@@ -229,8 +229,8 @@ function _state:save()
   for _, element in ipairs(_elements) do
     local text = "{pos = {"..element.pos[1]..", "..element.pos[2].."}, "
     text = text .."size = {"..element.width..", "..element.height.."}"
-    if element.kinect then
-      text = text ..", kinect = true"
+    if element.kinetic then
+      text = text ..", kinetic = true"
     end
     if element.death then
       text = text ..", death = true"
@@ -258,7 +258,7 @@ function _state:save()
   data = data ..player_pos..[[
 
   ]]
-  data = data .."  next_lvl = ".._name_bar:get_next_lvl()..[[
+  data = data .."  next_lvl = "..'"'.._name_bar:get_next_lvl()..'"'..[[
 
   }
   return _level

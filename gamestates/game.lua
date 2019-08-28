@@ -32,15 +32,6 @@ function _state:keypressed(key)
 end
 
 function _state:mousepressed(x, y, button, isTouch)
-  print("("..x..","..y..")")
-  if button == 1 then
-    table.insert(_level.elements,
-                 require "block" {pos = {x, y}, size = {30, 30}} )
-  elseif button == 2 then
-    table.insert(_level.elements,
-                 require "block" {pos = {x, y}, size = {30, 30},
-                                  kinetic = true} )
-  end
 end
 
 function _state:show_invis()

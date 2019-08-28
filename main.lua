@@ -23,5 +23,6 @@ end
 
 function love.load()
   setup()
-  GAMESTATE.switch(STATES.level_editor)
+  GAMESTATE.switch(STATES.game, "turn")
+  --GAMESTATE.switch(STATES.level_editor)
 end
