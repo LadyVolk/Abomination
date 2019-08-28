@@ -17,10 +17,13 @@ local _player_start_pos
 --declaration of local functions
 local _find_block
 
-function _state:enter()
+function _state:enter(prev, level_name)
   _bar = Bar()
   _name_bar = NameBar()
   _player_start_pos = Player()
+  if level_name then
+    _state:load(level_name)
+  end
 end
 
 function _state:draw()
@@ -272,6 +275,32 @@ function _state:save()
   else
     print("error: ", message)
   end
+end
+
+function _state:load(level_name)
+  local level_func, err = love.filesystem.load(level_name..".lua")
+  local level = level_func()
+  if err then
+    error("you got error: "..err)
+  end
+  for _, block in ipairs (level.blocks) do
+    local new_block = Block{
+                pos = block.pos,
+                size = block.size,
+                kinetic = block.kinetic,
+                invis_b = block.invis_b,
+                invisible = block.invisible,
+                death = block.death,
+                restart = block.restart,
+                edit_mode = true,
+    }
+    new_block.alpha = 1
+    table.insert(_elements, new_block)
+  end
+  _player_start_pos.pos = level.player_ipos
+  _name_bar:set_level_name(level_name)
+  _name_bar:set_next_lvl(level.next_lvl)
+  print("success loading level: "..level_name)
 end
 
 return _state
