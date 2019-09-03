@@ -10,6 +10,9 @@ end
 function _state:restart_lvl(lvl_name)
   if lvl_name then
     _level = require "level" (lvl_name)
+  else
+    time = 0
+    _level = require "level" (_level.level_data)
   end
 end
 
