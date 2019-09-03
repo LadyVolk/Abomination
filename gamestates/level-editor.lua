@@ -19,6 +19,7 @@ local _player_start_pos
 local _find_block
 
 function _state:enter(prev, level_name)
+  _elements = {}
   _bar = Bar()
   _name_bar = NameBar()
   _player_start_pos = Player()
@@ -264,6 +265,11 @@ function _state:save()
   data = data ..player_pos..[[
 
   ]]
+
+  local name = '  name = "'.._name_bar:get_level_name()..'",'
+  data = data ..name..[[
+
+  ]]
   data = data .."  next_lvl = "..'"'.._name_bar:get_next_lvl()..'"'..[[
 
   }
@@ -281,10 +287,17 @@ function _state:save()
 end
 
 function _state:load(level_name)
-  local level_func, err = love.filesystem.load(level_name..".lua")
-  local level = level_func()
-  if err then
-    error("you got error: "..err)
+  local level
+  if type(level_name) == "string" then
+    local level_func, err = love.filesystem.load(level_name..".lua")
+    if err then
+      error("you got error: "..err)
+    end
+    level = level_func()
+  elseif type(level_name) == "table" then
+    level = level_name
+  else
+    error("level is not a string or table")
   end
   for _, block in ipairs (level.blocks) do
     local new_block = Block{
@@ -301,9 +314,11 @@ function _state:load(level_name)
     table.insert(_elements, new_block)
   end
   _player_start_pos.pos = level.player_ipos
-  _name_bar:set_level_name(level_name)
+  _name_bar:set_level_name(level.name)
   _name_bar:set_next_lvl(level.next_lvl)
-  print("success loading level: "..level_name)
+
+  print("success loading level: "..level.name)
+
 end
 
 function _state:test_level()

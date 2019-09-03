@@ -27,6 +27,9 @@ end
 
 function _state:keypressed(key)
   _level:keypressed(key)
+  if key == "f10" then
+    self:edit_level()
+  end
 end
 
 function _state:mousepressed(x, y, button, isTouch)
@@ -34,6 +37,10 @@ end
 
 function _state:show_invis()
   _level:set_invis(true)
+end
+
+function _state:edit_level()
+  GAMESTATE.switch(STATES.level_editor, _level.level_data)
 end
 
 return _state

@@ -21,6 +21,8 @@ local _level = {
 
   player_ipos = {100, 900},
 
+  name = "turn",
+
   next_lvl = "true_death",
 
 

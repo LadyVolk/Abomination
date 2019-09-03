@@ -65,8 +65,9 @@ local function _create_level(name)
     error("level_name is not a string or table")
   end
   local level = {
-    name = name,
+    name = level_data.name,
     elements = {},
+    level_data = level_data,
 
     next_lvl = level_data.next_lvl,
 
@@ -78,6 +79,7 @@ local function _create_level(name)
     set_invis = _set_invis,
     update_elements_alpha = _update_elements_alpha,
   }
+
 
   local player = require "player"(level_data.player_ipos, level)
 

@@ -25,7 +25,9 @@
     },
 
     player_ipos = {276.85950413223, 984.84848484848},
+
+    name = "fit all",
+
     next_lvl = "next_level"
   }
   return _level
-  

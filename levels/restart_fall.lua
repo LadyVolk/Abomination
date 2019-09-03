@@ -23,6 +23,8 @@ local _level = {
 
   player_ipos = {500, 950},
 
+  name = "restart_fall",
+
   next_lvl = "box",
 
 }

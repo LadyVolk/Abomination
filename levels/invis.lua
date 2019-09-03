@@ -20,6 +20,8 @@ local _level = {
 
   player_ipos = {100, 900},
 
+  name = "invis",
+
   next_lvl = "invis_trap",
 
 }

@@ -25,7 +25,9 @@
     },
 
     player_ipos = {337.44851108487, 218.0611307884},
+
+    name = "invis_walk",
+
     next_lvl = " what"
   }
   return _level
-  
