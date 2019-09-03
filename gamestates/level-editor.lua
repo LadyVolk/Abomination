@@ -14,6 +14,7 @@ local _MIN_SIZE = 30
 local _bar
 local _name_bar
 local _player_start_pos
+
 --declaration of local functions
 local _find_block
 
@@ -49,6 +50,8 @@ function _state:keypressed(key)
   _name_bar:keypressed(key)
   if key == "f6" then
     self:save()
+  elseif key == "f10" then
+    self:test_level()
   end
 end
 
@@ -301,6 +304,13 @@ function _state:load(level_name)
   _name_bar:set_level_name(level_name)
   _name_bar:set_next_lvl(level.next_lvl)
   print("success loading level: "..level_name)
+end
+
+function _state:test_level()
+  local level_name = _name_bar:get_level_name()..".lua"
+  local level_func, err = love.filesystem.load(level_name)
+  local level_data = level_func()
+  GAMESTATE.switch(STATES.game, level_data)
 end
 
 return _state

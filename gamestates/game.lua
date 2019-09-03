@@ -2,16 +2,14 @@ local _state = {}
 local _time
 local _level
 local _fps = 60
-function _state:enter(prev, lvl_num)
+function _state:enter(prev, lvl_name)
   _time = 0
-  _state:restart_lvl(lvl_num)
+  _state:restart_lvl(lvl_name)
 end
 
-function _state:restart_lvl(lvl_num)
-  if lvl_num then
-    _level = require "level" (lvl_num)
-  else
-    _level = require "level" (_level.number)
+function _state:restart_lvl(lvl_name)
+  if lvl_name then
+    _level = require "level" (lvl_name)
   end
 end
 

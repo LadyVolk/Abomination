@@ -55,10 +55,17 @@ local function _update_elements_alpha(self, dt)
   end
 end
 
-local function _create_level(number)
-  local level_data = require("levels."..number)
+local function _create_level(name)
+  local level_data
+  if type(name) == "string" then
+    level_data = require("levels."..name)
+  elseif type(name) == "table" then
+    level_data = name
+  else
+    error("level_name is not a string or table")
+  end
   local level = {
-    number = number,
+    name = name,
     elements = {},
 
     next_lvl = level_data.next_lvl,
