@@ -2,9 +2,35 @@ local Physics = require "physics"
 local Indicator = require "player_indicator"
 local _image = {
   idle = love.graphics.newImage("assets/pug/base.png")
+  run = {
+    love.graphics.newImage("assets/pug/run/1.png"),
+    love.graphics.newImage("assets/pug/run/2.png"),
+    love.graphics.newImage("assets/pug/run/3.png"),
+    love.graphics.newImage("assets/pug/run/4.png"),
+    love.graphics.newImage("assets/pug/run/5.png"),
+    love.graphics.newImage("assets/pug/run/6.png"),
+    love.graphics.newImage("assets/pug/run/7.png"),
+    love.graphics.newImage("assets/pug/run/8.png"),
+  }
+  jump = {
+    love.graphics.newImage("assets/pug/jump/1.png"),
+    love.graphics.newImage("assets/pug/jump/2.png"),
+    love.graphics.newImage("assets/pug/jump/3.png"),
+    love.graphics.newImage("assets/pug/jump/4.png"),
+    love.graphics.newImage("assets/pug/jump/5.png"),
+  }
 }
 
 local function _draw(self)
+
+  local image
+
+  if self.animation_state == "idle" then
+    image = _image.idle
+  elseif self.animation_state == "run" then
+    image = _image.idle
+  end
+
   love.graphics.setColor(1, 1, 1, self.alpha)
 
   love.graphics.push()
@@ -37,7 +63,16 @@ end
 
 local function _update_new_pos(self, dt)
 
+  self.animation_timer = self.animation_timer + dt
+
+  while self.animation_timer >= self.animation_speed do
+    self.animation_frame = self.animation_frame + 1
+    self.animation_timer = self.animation_timer - self.animation_speed
+  end
+
   if love.keyboard.isDown('a') and not love.keyboard.isDown('d') then
+
+    self.animation_state = "run"
 
     self.invert_sprite = true
 
@@ -45,11 +80,14 @@ local function _update_new_pos(self, dt)
 
   elseif love.keyboard.isDown('d') and not love.keyboard.isDown('a') then
 
+    self.animation_state = "run"
+
     self.invert_sprite = false
 
     self.s_vector[1] = math.min(self.s_vector[1] + self.move_force * dt, self.max_speed[1])
 
   else
+    self.animation_state = "idle"
     -- for x
     if self.s_vector[1] > 0 then
       self.s_vector[1] = math.max(self.s_vector[1] - self.stop_force * dt, 0)
@@ -102,6 +140,14 @@ local function _create_player(pos, level)
     alpha = 1,
 
     invert_sprite = false,
+
+    animation_state = "idle",
+
+    animation_timer = 0,
+
+    animation_speed = 0.1,
+
+    animation_frame = 1,
 
     type = "player",
 
