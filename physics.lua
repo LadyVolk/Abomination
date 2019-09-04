@@ -158,7 +158,9 @@ function _physics.rotate(angle, elements)
   if _physics.rotation == 0 then
     _physics.rotation = _physics.rotation + angle
     for _, element in ipairs(elements) do
-      element.width, element.height = element.height, element.width
+      if element.type ~= "player" then
+        element.width, element.height = element.height, element.width
+      end
     end
   end
 end

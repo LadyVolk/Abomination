@@ -1,46 +1,23 @@
-local _level = {
-  blocks = {
+  local _level = {
+    blocks = {
+     {pos = {230, 480}, size = {30, 30}, death = true},
+     {pos = {170, 355}, size = {30, 400}},
+     {pos = {230, 540}, size = {120, 30}},
+     {pos = {485, 170}, size = {600, 30}},
+     {pos = {800, 505}, size = {30, 700}},
+     {pos = {635, 640}, size = {300, 30}},
+     {pos = {470, 505}, size = {30, 400}},
+     {pos = {300, 580}, size = {30, 550}, restart = true},
+     {pos = {515, 840}, size = {400, 30}},
+     {pos = {397.14285714286, 760}, size = {60, 60}, kinetic = true, restart = true},
+     {pos = {492.85714285714, 755.71428571429}, size = {60, 60}, kinetic = true, restart = true},
+     {pos = {598.57142857143, 751.42857142857}, size = {60, 60}, kinetic = true, restart = true},
+     {pos = {685.71428571429, 751.42857142857}, size = {60, 60}, kinetic = true, restart = true},
+    },
 
-    --death block
-    {pos = {230, 480}, size = {30, 30}, death = true},
-
-    --left of death block
-    {pos = {170, 355}, size = {30, 400}},
-
-    --below death
-    {pos = {230, 540}, size = {120, 30}},
-
-    --above death
-    {pos = {485, 170}, size = {600, 30}},
-
-    --right limit
-    {pos = {800, 505}, size = {30, 700}},
-
-    --below hole
-    {pos = {635, 640}, size = {300, 30}},
-
-    --left wall of hole
-    {pos = {470, 505}, size = {30, 400}},
-
-    --left wall tunnel
-    {pos = {300, 580}, size = {30, 550}, restart = true},
-
-    --botton wall
-    {pos = {530, 840}, size = {430, 30}},
-
-    --restart blocks
-    {pos = {400, 730}, size = {60, 60}, restart = true, kinetic = true},
-    {pos = {500, 730}, size = {60, 60}, restart = true, kinetic = true},
-    {pos = {600, 730}, size = {60, 60}, restart = true, kinetic = true},
-    {pos = {700, 730}, size = {60, 60}, restart = true, kinetic = true},
-
-  },
-
-  player_ipos = {100, 900},
-
-  name = "box",
-
-  next_lvl = "invis",
-
-}
-return _level
+    player_ipos = {100, 900},
+    name = "box",
+    next_lvl = "invis"
+  }
+  return _level
+  

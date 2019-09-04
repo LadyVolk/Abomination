@@ -64,7 +64,7 @@ local _level = {
 
   name = "invis_trap",
 
-  next_lvl = 7,
+  next_lvl = "invis_walk",
 
 }
 return _level

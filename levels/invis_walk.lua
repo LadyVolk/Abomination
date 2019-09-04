@@ -19,15 +19,14 @@
      {pos = {695.59228650138, 737.2681359045}, size = {173.46189164371, 30}, invisible = true},
      {pos = {877.97520661157, 397.50688705234}, size = {113.56290174472, 30}, death = true, invisible = true},
      {pos = {511.58402203857, 737.72727272727}, size = {196.20752984389, 30.918273645546}, restart = true, invisible = true},
-     {pos = {429.39853076217, 798.43893480257}, size = {30, 100.91827364555}, restart = true},
-     {pos = {566.0101010101, 907.71349862259}, size = {30, 51.331496786042}, restart = true},
+     {pos = {429.39853076217, 798.43893480257}, size = {30, 100.91827364555}, restart = true, invisible = true},
+     {pos = {566.0101010101, 907.71349862259}, size = {30, 51.331496786042}, restart = true, invisible = true},
      {pos = {566.22130394858, 848.02571166208}, size = {30, 69.69696969697}, invisible = true},
     },
 
     player_ipos = {337.44851108487, 218.0611307884},
-
     name = "invis_walk",
-
-    next_lvl = " what"
+    next_lvl = "fit_all"
   }
   return _level
+  

@@ -22,6 +22,6 @@ end
 
 function love.load()
   setup()
-  GAMESTATE.switch(STATES.game, "fit all")
-  --GAMESTATE.switch(STATES.level_editor, "fit all")
+  --GAMESTATE.switch(STATES.game, "turn")
+  GAMESTATE.switch(STATES.level_editor, "invis_walk")
 end

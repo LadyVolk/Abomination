@@ -1,30 +1,16 @@
-local _level = {
-  blocks = {
-    --blocks above
-    {pos = {430, 400}, size = {90, 30}},
+  local _level = {
+    blocks = {
+     {pos = {558.57142857143, 470}, size = {30, 110}, death = true},
+     {pos = {437.14285714286, 470.71428571429}, size = {178.57142857143, 105.71428571429}, kinetic = true},
+     {pos = {331.42857142858, 546.42857142857}, size = {502.85714285714, 30}},
+     {pos = {96.428571428573, 462.85714285714}, size = {30, 137.14285714286}},
+     {pos = {452.14285714285, 395}, size = {275.71428571429, 30}},
+     {pos = {596.42857142857, 470.71428571429}, size = {30, 181.42857142857}},
+    },
 
-    --left of fall blocks
-    {pos = {340, 415}, size = {30, 60}},
-
-    --right of fall block
-    {pos = {430, 430}, size = {30, 30}, death = true},
-
-    {pos = {460, 430}, size = {30, 30}},
-
-    --fall block
-    {pos = {400, 430}, size = {30, 30}, kinetic = true},
-
-    --blocks below
-    {pos = {400, 460}, size = {150, 30}},
-
-  },
-
-  player_ipos = {100, 900},
-
-  name = "turn",
-
-  next_lvl = "true_death",
-
-
-}
-return _level
+    player_ipos = {100, 900},
+    name = "turn",
+    next_lvl = "true_death"
+  }
+  return _level
+  
