@@ -1,15 +1,19 @@
 local Physics = require "physics"
 local Indicator = require "player_indicator"
+local _image = {
+  idle = love.graphics.newImage("assets/pug/base.png")
+}
 
 local function _draw(self)
-  love.graphics.setColor(1, 0, 1, self.alpha)
+  love.graphics.setColor(1, 1, 1, self.alpha)
 
   love.graphics.push()
   love.graphics.translate(self.pos[1], self.pos[2])
   love.graphics.rotate(-Physics.get_rotation())
-  love.graphics.rectangle("fill", -self.width/2,
-                          -self.height/2,
-                          self.width, self.height)
+  local i_w, i_h = _image.idle:getWidth(), _image.idle:getHeight()
+  love.graphics.draw(_image.idle, -self.width/2, -self.height/2, nil,
+                    self.width/i_w, self.height/i_h)
+
   love.graphics.pop()
 
   if self.pos[1] < -self.width/2 or
@@ -78,8 +82,8 @@ local function _create_player(pos, level)
     pos = {pos[1], pos[2]},
     new_pos =  {pos[1], pos[2]},
 
-    width = 25,
-    height = 25,
+    width = 42,
+    height = 30,
 
     s_vector = {0, 0},
     max_speed = {300, 700},
