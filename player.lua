@@ -11,8 +11,13 @@ local function _draw(self)
   love.graphics.translate(self.pos[1], self.pos[2])
   love.graphics.rotate(-Physics.get_rotation())
   local i_w, i_h = _image.idle:getWidth(), _image.idle:getHeight()
-  love.graphics.draw(_image.idle, -self.width/2, -self.height/2, nil,
-                    self.width/i_w, self.height/i_h)
+  if not self.invert_sprite then
+    love.graphics.draw(_image.idle, -self.width/2, -self.height/2, nil,
+                      self.width/i_w, self.height/i_h)
+  else
+    love.graphics.draw(_image.idle, self.width/2, -self.height/2, nil,
+                      -self.width/i_w, self.height/i_h)
+  end
 
   love.graphics.pop()
 
@@ -34,9 +39,13 @@ local function _update_new_pos(self, dt)
 
   if love.keyboard.isDown('a') and not love.keyboard.isDown('d') then
 
+    self.invert_sprite = true
+
     self.s_vector[1] = math.max(self.s_vector[1] - self.move_force * dt, -self.max_speed[1])
 
   elseif love.keyboard.isDown('d') and not love.keyboard.isDown('a') then
+
+    self.invert_sprite = false
 
     self.s_vector[1] = math.min(self.s_vector[1] + self.move_force * dt, self.max_speed[1])
 
@@ -91,6 +100,8 @@ local function _create_player(pos, level)
     stop_force = 500,
     jump_force = 350,
     alpha = 1,
+
+    invert_sprite = false,
 
     type = "player",
 
