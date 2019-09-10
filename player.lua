@@ -1,7 +1,7 @@
 local Physics = require "physics"
 local Indicator = require "player_indicator"
 local _image = {
-  idle = love.graphics.newImage("assets/pug/base.png")
+  idle = love.graphics.newImage("assets/pug/base.png"),
   run = {
     love.graphics.newImage("assets/pug/run/1.png"),
     love.graphics.newImage("assets/pug/run/2.png"),
@@ -11,7 +11,7 @@ local _image = {
     love.graphics.newImage("assets/pug/run/6.png"),
     love.graphics.newImage("assets/pug/run/7.png"),
     love.graphics.newImage("assets/pug/run/8.png"),
-  }
+  },
   jump = {
     love.graphics.newImage("assets/pug/jump/1.png"),
     love.graphics.newImage("assets/pug/jump/2.png"),
@@ -28,7 +28,7 @@ local function _draw(self)
   if self.animation_state == "idle" then
     image = _image.idle
   elseif self.animation_state == "run" then
-    image = _image.idle
+    image = _image.run[(self.animation_frame%#_image.run)+1]
   end
 
   love.graphics.setColor(1, 1, 1, self.alpha)
@@ -36,12 +36,12 @@ local function _draw(self)
   love.graphics.push()
   love.graphics.translate(self.pos[1], self.pos[2])
   love.graphics.rotate(-Physics.get_rotation())
-  local i_w, i_h = _image.idle:getWidth(), _image.idle:getHeight()
+  local i_w, i_h = image:getWidth(), image:getHeight()
   if not self.invert_sprite then
-    love.graphics.draw(_image.idle, -self.width/2, -self.height/2, nil,
+    love.graphics.draw(image, -self.width/2, -self.height/2, nil,
                       self.width/i_w, self.height/i_h)
   else
-    love.graphics.draw(_image.idle, self.width/2, -self.height/2, nil,
+    love.graphics.draw(image, self.width/2, -self.height/2, nil,
                       -self.width/i_w, self.height/i_h)
   end
 
