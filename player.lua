@@ -29,7 +29,10 @@ local function _draw(self)
     image = _image.idle
   elseif self.animation_state == "run" then
     image = _image.run[(self.animation_frame%#_image.run)+1]
+  elseif self.animation_state == "jump" then
+    image = _image.jump[(self.animation_frame%#_image.jump)+1]
   end
+
 
   love.graphics.setColor(1, 1, 1, self.alpha)
 
@@ -71,23 +74,27 @@ local function _update_new_pos(self, dt)
   end
 
   if love.keyboard.isDown('a') and not love.keyboard.isDown('d') then
-
-    self.animation_state = "run"
+    if self.animation_state ~= "jump" then
+      self.animation_state = "run"
+    end
 
     self.invert_sprite = true
 
     self.s_vector[1] = math.max(self.s_vector[1] - self.move_force * dt, -self.max_speed[1])
 
   elseif love.keyboard.isDown('d') and not love.keyboard.isDown('a') then
-
-    self.animation_state = "run"
+    if self.animation_state ~= "jump" then
+      self.animation_state = "run"
+    end
 
     self.invert_sprite = false
 
     self.s_vector[1] = math.min(self.s_vector[1] + self.move_force * dt, self.max_speed[1])
 
   else
-    self.animation_state = "idle"
+    if self.animation_state ~= "jump" then
+      self.animation_state = "idle"
+    end
     -- for x
     if self.s_vector[1] > 0 then
       self.s_vector[1] = math.max(self.s_vector[1] - self.stop_force * dt, 0)
@@ -108,6 +115,7 @@ local function _keypressed(self, key)
   screen_w, screen_h = love.graphics.getDimensions()
   if key == 'space' and not self.jumping then
     self.jumping = true
+    self.animation_state = "jump"
     self.s_vector[2] = -self.jump_force
   end
 end

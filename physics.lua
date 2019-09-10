@@ -50,6 +50,9 @@ function _physics.stay_inside(object)
     object.s_vector[2] = 0
     if object.type == "player" then
       object.jumping = false
+      if object.animation_state == "jump" then
+        object.animation_state = "idle"
+      end
     end
   end
 end
@@ -89,6 +92,9 @@ function _physics.check_collision(object1, object2)
 
     if math.abs(zy) < math.abs(zx) then
       if object1.s_vector[2] > 0 and object1.type == "player" then
+        if object.animation_state == "jump" then
+          object1.animation_state = "idle"
+        end
         object1.jumping = false
         end
       object1.s_vector[2] = 0
