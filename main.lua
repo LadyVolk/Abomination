@@ -14,6 +14,12 @@ STATES = {
 local function setup()
   GAMESTATE.registerEvents()
 
+  background_music = love.audio.newSource("assets/sounds/Celtic_Warrior.mp3",
+                                          "stream")
+  background_music:play()
+  background_music:setVolume(0.2)
+  background_music:setLooping(true)
+
   RES.init()
   love.window.setMode(700, 700, {resizable = true})
   RES.adjustWindow(700, 700)
