@@ -29,13 +29,13 @@ function _state:enter()
   _elements = {
 
     Button({300, 60}, {1, 1, 0}, {0, 0, 0}, "Play",
-    {w_w_c, w_h_c - 150},
+    {w_w_c, w_h_c - 250},
     function()
       GAMESTATE.switch(STATES.game, "first")
     end),
 
     Button({300, 60}, {1, 1, 0}, {0, 0, 0}, "Quit Game",
-    {w_w_c, w_h_c + 150},
+    {w_w_c, w_h_c + 50},
     function()
       love.event.quit()
     end)
@@ -47,14 +47,20 @@ function _state:draw()
   love.graphics.setColor(1, 0.5, 0.5, 1)
   love.graphics.setFont(FONTS.title)
   local title = "ABOMINATION"
-  love.graphics.print(title, w_w_c - FONTS.title:getWidth(title)/2, 100)
+  love.graphics.print(title, w_w_c - FONTS.title:getWidth(title)/2, 50)
+
+  love.graphics.setFont(FONTS.large)
+  local commands = [[Commands:
+  Press 'E' and 'Q' to turn the screen,
+  'WASD' to move and 'space' to jump]]
+  love.graphics.print(commands, w_w_c - FONTS.large:getWidth(commands)/2, 700)
 
   love.graphics.setColor(0.5, 1, 1, 1)
   love.graphics.setFont(FONTS.large)
   local pedro = "Game By: Pedro Arrochela Lobo"
   love.graphics.print(pedro, 10, 900)
 
-  local jhin = "Art by: Jean Bonnier"
+  local jhin = "Art by: Jean Bonnier Marinho"
   love.graphics.print(jhin, 10, 950)
 
   love.graphics.setColor(1, 0.5, 1, 1)
@@ -63,7 +69,7 @@ function _state:draw()
   end
   love.graphics.setColor(1, 1, 1, 1)
   love.graphics.draw(_run[_animation_frame], w_w_c-_run[_animation_frame]:getWidth()/2,
-                     w_h_c-_run[_animation_frame]:getHeight()/2)
+                     w_h_c-_run[_animation_frame]:getHeight()/2-100)
 
 end
 
