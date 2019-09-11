@@ -17,7 +17,6 @@
 
     player_ipos = {100, 900},
     name = "box",
-    next_lvl = "invis"
+    next_lvl = "fit_all"
   }
   return _level
-  

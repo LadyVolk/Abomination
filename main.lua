@@ -26,6 +26,6 @@ end
 
 function love.load()
   setup()
-  --GAMESTATE.switch(STATES.win)
-  GAMESTATE.switch(STATES.game, "fit_all")
+  GAMESTATE.switch(STATES.menu)
+  --GAMESTATE.switch(STATES.game, "menu")
 end

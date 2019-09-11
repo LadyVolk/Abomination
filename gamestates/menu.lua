@@ -31,7 +31,7 @@ function _state:enter()
     Button({300, 60}, {1, 1, 0}, {0, 0, 0}, "Play",
     {w_w_c, w_h_c - 150},
     function()
-      GAMESTATE.switch(STATES.game, "turn")
+      GAMESTATE.switch(STATES.game, "first")
     end),
 
     Button({300, 60}, {1, 1, 0}, {0, 0, 0}, "Quit Game",

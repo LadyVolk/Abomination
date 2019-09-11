@@ -20,6 +20,6 @@
 
     player_ipos = {276.85950413223, 984.84848484848},
     name = "fit_all",
-    next_lvl = "win"
+    next_lvl = "invis"
   }
   return _level
