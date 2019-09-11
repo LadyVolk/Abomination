@@ -2,6 +2,7 @@ GAMESTATE = require "ext_lib.gamestate"
 RES = require "ext_lib.res_manager"
 FONTS = {}
 CURSOR = require "cursor"
+SFXS = {}
 
 STATES = {
   game = require "gamestates.game",
@@ -13,6 +14,11 @@ STATES = {
 
 local function setup()
   GAMESTATE.registerEvents()
+
+  SFXS.death = love.audio.newSource("assets/sounds/death.ogg", "static")
+  SFXS.death:setVolume(0.2)
+  SFXS.restart = love.audio.newSource("assets/sounds/restart.wav", "static")
+  SFXS.restart:setVolume(0.2)
 
   background_music = love.audio.newSource("assets/sounds/Celtic_Warrior.mp3",
                                           "stream")

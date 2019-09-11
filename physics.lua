@@ -64,6 +64,8 @@ function _physics.check_collision(object1, object2)
     end
 
     if object1.type == "player" and object2.restart then
+        SFXS.restart:stop()
+        SFXS.restart:play()
         GAMESTATE.current():restart_lvl()
     end
 

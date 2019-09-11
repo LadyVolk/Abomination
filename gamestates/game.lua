@@ -8,6 +8,7 @@ function _state:enter(prev, lvl_name)
 end
 
 function _state:restart_lvl(lvl_name)
+
   if lvl_name then
     _level = require "level" (lvl_name)
   else

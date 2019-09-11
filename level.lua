@@ -32,6 +32,10 @@ local function _keypressed(self, key)
 end
 
 local function _win(level)
+
+  SFXS.death:stop()
+  SFXS.death:play()
+
   level.player = nil
   for i, element in ipairs(level.elements) do
     if element.type == "player" then
