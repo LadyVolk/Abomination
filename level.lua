@@ -38,7 +38,11 @@ local function _win(level)
       table.remove(level.elements, i)
     end
   end
-  GAMESTATE.switch(STATES.died, level.next_lvl)
+  if level.next_lvl == "win" then
+    GAMESTATE.switch(STATES.win)
+  else
+    GAMESTATE.switch(STATES.died, level.next_lvl)
+  end
 end
 
 local function _set_invis(level, status)
