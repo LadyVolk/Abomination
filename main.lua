@@ -7,7 +7,8 @@ STATES = {
   game = require "gamestates.game",
   died = require "gamestates.died",
   level_editor = require "gamestates.level-editor",
-  menu = require "gamestates.menu"
+  menu = require "gamestates.menu",
+  win = require "gamestates.win",
 }
 
 local function setup()
@@ -25,6 +26,6 @@ end
 
 function love.load()
   setup()
-  GAMESTATE.switch(STATES.menu)
+  GAMESTATE.switch(STATES.win)
   --GAMESTATE.switch(STATES.level_editor, "invis_walk")
 end
